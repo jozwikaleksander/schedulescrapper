@@ -1,0 +1,25 @@
+{
+  "name": "schedulescrapper",
+  "version": "1.0.0",
+  "description": "School plan scrapper",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jozwikaleksander/schedulescrapper.git"
+  },
+  "author": "Aleksander Jóźwik",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jozwikaleksander/schedulescrapper/issues"
+  },
+  "homepage": "https://github.com/jozwikaleksander/schedulescrapper#readme",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.12",
+    "express": "^4.18.1",
+    "request-promise": "^4.2.6",
+    "tabletojson": "^2.0.7"
+  }
+}
