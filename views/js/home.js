@@ -29,12 +29,23 @@ timeInput.defaultValue = hours + ':' +minutes;
 // Submiting form without reloading the website
 form.addEventListener('submit', function(e) {
     e.preventDefault();
-    let name = form.elements.name.value;
+    let url = form.elements.url.value;
     let option = form.elements.query.value;
     let time = form.elements.time.value;
-    let day = form.elements.day.value;
+    let day = dayInput.value;
+    let name = form.elements.name.value;
 
-    window.open(`?q=${option}&url=${name}&t=${time}&d=${day}`,'_self');
+    console.log(name);
+
+    console.log(day);
+
+    if(name == ''&&url[url.length-1] == 'l'){
+        window.open(`?q=${option}&url=${url}&t=${time}&d=${day}`,'_self');
+    }
+    else if (url[url.length-1] != 'l'){
+        console.log(url[url.length-1]);
+        window.open(`?q=${option}&url=${url}&t=${time}&d=${day}&n=${name}`,'_self');
+    }
 });
 
 currentLessonRadio.addEventListener('change', () => {

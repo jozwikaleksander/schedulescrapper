@@ -28,7 +28,7 @@ const getCurrentLesson = (data,time,providedDayIndex) => {
     // Creating a variable that will store the index of current day.
     let dayName;
 
-    // Checking if day was provided in the query
+    // Checking if day was provided in the query, else  get the current day
     if(checkIfDayWasProvided(providedDayIndex)){
         dayName = getDayName(providedDayIndex);
        
@@ -38,30 +38,26 @@ const getCurrentLesson = (data,time,providedDayIndex) => {
 
     // Checking if day is a school day
     if(!checkDay(dayName)){
+        // If not, change day to the next school day (e.g. Saturday -> Monday)
         dayName = "Poniedziałek";
-        let interval = timeToMinutes(getFirstLesson(data,time,dayName)['Godz']);
-        timeInMinutes = interval[0];
+        let interval = timeToMinutes(getFirstLesson(data,time,dayName)['Godz']); //Get time when the first lesson starts in that day
+        timeInMinutes = interval[0]; // Set time to the time when the first lesson starts
     }
     else{
+        // If it is a school day, check if it is too early
         if(checkIfTooEarly(data,timeInMinutes,dayName)){
-            // console.log('Too early');
+            // If it is too early, set time to the time when the first lesson starts
             timeInMinutes = timeToMinutes(getFirstLesson(data,time,dayName)['Godz'])[0];
         } else if (checkIfTooLate(data,timeInMinutes,dayName)){
-            // console.log('Too late');
-            if(dayName == "Piątek"){
-                dayName = "Poniedziałek";
-            }
-            else{
-                dayName = getDayName(getDayIndex(dayName)+1);   
-                console.log(dayName);
-            }
-            let firstLesson = getFirstLesson(data,time,dayName);
-            timeInMinutes = timeToMinutes(firstLesson['Godz'])[0];
+            // If it is too late, change day to the next school day (e.g. Tuesday -> Wednesday) and set time to the time when the first lesson starts
+            let result = goToTheNextDay(dayName,data,time);
+            dayName = result[1];
+            timeInMinutes = result[0];
         }
     }
 
-
-    currentLesson = getCurrentLessonIndex(data,timeInMinutes,dayName);
+    // Getting the current lesson
+    currentLesson = getLesson(data,timeInMinutes,dayName);
     // Finding the current lesson`s index
     
     return currentLesson;
@@ -84,31 +80,33 @@ const minutesToTime = (minutes) => {
     let min = minutes%60;
     return [hours,min].join(":");
 }
+// Function that checks if day was provided in the URL
 const checkIfDayWasProvided = (providedDayIndex) => {
     if(providedDayIndex == undefined){
         return false;
     }
     return true;
 }
+// Function that checks if the day is a school day
 const checkDay = (day) => {
-    // Check if day is a school day
     if(day == "Sobota" || day == "Niedziela"){
         return false;
     }
     return true;
 }
+// Get the name of the day based on the index
 const getDayName = (dayIndex) => {
     let days = ["Niedziela","Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek","Sobota"];
     return days[dayIndex];
 }
+// Get the index of the day based on the name
 const getDayIndex = (dayName) => {
     let days = ["Niedziela","Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek","Sobota"];
     return days.indexOf(dayName);
 }
+// Check if provided time is beforee the first lesson starts
 const checkIfTooEarly = (data,time,day) => {
-    let lesson = getCurrentLessonIndex(data,time,day);
-
-    console.log(lesson);
+    let lesson = getLesson(data,time,day);
     if(lesson){
         let interval = timeToMinutes(lesson['interval'].join("-"));        
         if(interval[0] > time && lesson['index'] == 0){
@@ -118,6 +116,7 @@ const checkIfTooEarly = (data,time,day) => {
     }
     return false;
 }
+// Check if provided time is after the last lesson ends
 const checkIfTooLate = (data,time,day) => {
     let lesson = getLastLesson(data,time,day);
 
@@ -131,7 +130,8 @@ const checkIfTooLate = (data,time,day) => {
     
     return false;
 }
-const getCurrentLessonIndex = (data,timeInMinutes, day) => {
+// Get lesson that is currently happening
+const getLesson = (data,timeInMinutes, day) => {
     let currentLessonIndex = 0;
     for(let i = 0; i < data[0].length; i++){
         let lesson = data[0][i]["Godz"];
@@ -175,12 +175,14 @@ const getCurrentLessonIndex = (data,timeInMinutes, day) => {
     currentLesson.info = data[0][currentLessonIndex][day];
     return currentLesson;
 }
+// Check if the time is in interval
 const inInterval = (time, interval) => {
     if((time>=interval[0] && time<=interval[1])){
         return true;
     }
     return false;
 }
+// Get the first lesson of the day
 const getFirstLesson = (data,time,day) => {
 
     for(let i = 0; i < data[0].length; i++){
@@ -193,6 +195,7 @@ const getFirstLesson = (data,time,day) => {
         }
     } 
 }
+// Get the last lesson of the day
 const getLastLesson = (data,time,day) => {
     for(let i = data[0].length-1; i >= 0; i--){
         let lesson = data[0][i];
@@ -203,6 +206,20 @@ const getLastLesson = (data,time,day) => {
             return lesson;
         }
     } 
+}
+// Go to the next day and set time to the beginning of first lesson
+const goToTheNextDay = (dayName,data,time) => {
+    if(dayName == "Piątek"){
+        dayName = "Poniedziałek";
+    }
+    else{
+        dayName = getDayName(getDayIndex(dayName)+1);   
+        console.log(dayName);
+    }
+    let firstLesson = getFirstLesson(data,time,dayName);
+    let timeInMinutes = timeToMinutes(firstLesson['Godz'])[0];
+
+    return [timeInMinutes, dayName];
 }
 // Exporting the main function
 module.exports = {

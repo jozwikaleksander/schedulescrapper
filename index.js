@@ -28,38 +28,66 @@ app.get('/', (req, res) => {
     let url = req.query.url;
     let time = req.query.t;
     let day = req.query.d;
+    let name = req.query.n;
+
+    console.log(day);
 
     if(queryType != undefined){
-      request(url, function(error, response, html) {
-        if (!error) {
-          let $ = cheerio.load(html);
+      if(name != undefined){
+        request(url+'/lista.html', (error, response, html) => {
+          if(!error){
+            const $ = cheerio.load(html);
+            let data = [];
+            data = $('a').map(function(i, el) {
+              return $(this).attr('href')+','+$(this).text();
+            }).get();
 
-          // Finding the table with the schedule
-          let table ="<table>"+$('table.tabela').html()+"</table>";
-          // Replacing <br> tags with new lines
-          table = table.replace(/<br\s*[\/]?>/gi, "\n");
-          // Converting the HTML table to JSON
-          let data = tabletojson.convert(table);
+            let result;
 
-          // Response variable
-          let resValue;
+            console.log(name);
 
-          // Checking the query type
-          if(queryType=="schedule"){ // If the query type is schedule
-            // Sending the schedule data
-            resValue = data;
+            result = data.filter((item) => {
+              if(item.toLowerCase().includes(name.toLowerCase())){
+                  return item.split(',');
+              }
+            })
+            if(result.length > 0){
+              result = result[0].split(',')[0];
+              console.log(result);
+              if(queryType=='schedule'){
+                res.redirect('/?'+'q='+queryType+'&url='+url+"/"+result);
+              }
+              else if(queryType=='currentLesson'){
+                res.redirect('/?'+'q='+queryType+'&url='+url+"/"+result+'&t='+time+'&d='+day);
+              }
+              
+            }
           }
-          else if(queryType=="currentLesson"){ // If the query type is currentLesson
-            // Getting current lesson with provided information
-            resValue = currentLessonScript.getCurrentLesson(data,time,day);
+        });
+      } else{
+        request(url, function(error, response, html) {
+          if (!error) {
+            let data = getTable(html);
+            // Response variable
+            let resValue;
+      
+            // Checking the query type
+            if(queryType=="schedule"){ // If the query type is schedule
+              // Sending the schedule data
+              resValue = data;
+            }
+            else if(queryType=="currentLesson"){ // If the query type is currentLesson
+              // Getting current lesson with provided information
+              resValue = currentLessonScript.getCurrentLesson(data,time,day);
+            }
+            if(responseType=="json"){ // If the response type is JSON
+              res.render('empty',{resValue:resValue});
+            } else{
+              res.render(queryType,{resValue:resValue});
+            }
           }
-          if(responseType=="json"){ // If the response type is JSON
-            res.render('empty',{resValue:resValue});
-          } else{
-            res.render(queryType,{resValue:resValue});
-          }
-        }
-      });
+        });
+      }
     }
     else{
       res.render('home');
@@ -70,5 +98,17 @@ app.get('/', (req, res) => {
 app.listen(port, () => {
     console.log(`Now listening on port ${port}`); 
 });
+
+const getTable = (html) =>{
+  let $ = cheerio.load(html);
+  // Finding the table with the schedule
+  let table ="<table>"+$('table.tabela').html()+"</table>";
+  // Replacing <br> tags with new lines
+  table = table.replace(/<br\s*[\/]?>/gi, "\n");
+  // Converting the HTML table to JSON
+  let data = tabletojson.convert(table);
+
+  return data;
+}
 
 module.exports = app;
