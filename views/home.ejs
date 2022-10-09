@@ -20,18 +20,20 @@
             <label for="schedule"> <input type="radio" id="schedule" checked name="query" value="schedule">Plan zajęć</label><br>
             <label for="currentLesson"> <input type="radio" id="currentLesson" name="query" value="currentLesson">Najbliższa lekcja</label>
             <br>
-            <label for="time">Godzina: <input type="time" name="time" id="time-input"></label>
-            <br>
+            <div id="dynamic-container" class="less">
+                <label id='time-label'for="time" disabled>Godzina: <input type="time" name="time" id="time-input"></label>
+                <br>
 
-            <label for="day">Dzień tygodnia:
-                <select name="day" id="day">
-                    <option value="1">Poniedziałek</option>
-                    <option value="2">Wtorek</option>
-                    <option value="3">Środa</option>
-                    <option value="4">Czwartek</option>
-                    <option value="5">Piątek</option>
-                </select>
-            </label>
+                <label id='day-label' for="day" disabled>Dzień tygodnia:
+                    <select name="day" id="day" class="hidden">
+                        <option value="1">Poniedziałek</option>
+                        <option value="2">Wtorek</option>
+                        <option value="3">Środa</option>
+                        <option value="4">Czwartek</option>
+                        <option value="5">Piątek</option>
+                    </select>
+                </label>
+            </div>
 
             <br>
             <br>
