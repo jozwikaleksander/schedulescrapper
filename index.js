@@ -3,63 +3,71 @@ const cheerio = require('cheerio');
 const request = require('request-promise');
 const express = require('express');
 const { Tabletojson } = require('tabletojson');
+const currentLessonScript = require('./currentLesson.js');
+var favicon = require('serve-favicon');
+const ejs = require('ejs');
+ejs.delimiter = '/';
+ejs.openDelimiter = '[';
+ejs.closeDelimiter = ']';
+
+// App configuration
 const app = express();
 const port = 5000;
+app.set('view engine', 'ejs')
+app.use(express.static(__dirname + '/views'));
+app.use(favicon(__dirname + '/views/img/favicon.ico'));
 
+// Creating TableToJSON object
 const tabletojson = new require('tabletojson').Tabletojson;
 
+// Creating a GET route
 app.get('/', (req, res) => {
-    let queryType = req.query.q
-    let url = req.query.url
+    // Accessing the URL variables
+    let responseType = req.query.r;
+    let queryType = req.query.q;
+    let url = req.query.url;
+    let time = req.query.t;
+    let day = req.query.d;
 
-    let tableContent = {};  
-    request(url, function(error, response, html) {
+    if(queryType != undefined){
+      request(url, function(error, response, html) {
         if (!error) {
-          // Next, we'll utilize the cheerio library on the returned html which will essentially give us jQuery functionality
           let $ = cheerio.load(html);
 
+          // Finding the table with the schedule
           let table ="<table>"+$('table.tabela').html()+"</table>";
+          // Replacing <br> tags with new lines
           table = table.replace(/<br\s*[\/]?>/gi, "\n");
-          let data = tabletojson.convert(table,{stripHtmlFromCells: true})
+          // Converting the HTML table to JSON
+          let data = tabletojson.convert(table);
 
-          if(queryType=="schedule"){
-            res.send(data);
+          // Response variable
+          let resValue;
+
+          // Checking the query type
+          if(queryType=="schedule"){ // If the query type is schedule
+            // Sending the schedule data
+            resValue = data;
           }
-          else if(queryType=="currentLesson"){
-            let response = ""
-            let date = new Date()
-            let days = ["Poniedziałek, Wtorek, Środa, Czwartek, Piątek"]
-            let day = days[date.getDay()-1];
-            let hours = date.getHours();
-            let minutes = date.getMinutes();
-            let timeInMinutes = (hours*60) + minutes;
-            let currentLesson = 0
-
-            for(let i = 0; i < data[0].length; i++){
-                let lesson = data[0][i]["Godz"];
-                if(lesson){
-                    lesson = lesson.split("- "); 
-                    response += `Lekcja ${lesson}`
-                    response += `Lekcja ${lesson}`
-                    // let a = ((parseInt(lesson[0].split(":")[0]))* 60)+parseInt(lesson[0].split(":")[1]);
-                    // response += a+"\n";
-                    // let b = ((parseInt(lesson[1].split(":")[0]))* 60)+parseInt(lesson[1].split(":")[1]);
-                    // response += b;
-                    // if(a < timeInMinutes && b > timeInMinutes){
-                    //     currentLesson = i;
-                    //     break;
-                    // }
-                }
-            }
-            response += `Current lesson index: ${currentLesson}`
-
-            res.send(response);
+          else if(queryType=="currentLesson"){ // If the query type is currentLesson
+            // Getting current lesson with provided information
+            resValue = currentLessonScript.getCurrentLesson(data,time,day);
+          }
+          if(responseType=="json"){ // If the response type is JSON
+            res.render('empty',{resValue:resValue});
+          } else{
+            res.render(queryType,{resValue:resValue});
           }
         }
-    });
+      });
+    }
+    else{
+      res.render('home');
+    }
 });
 
-app.listen(port, () => {            //server starts listening for any attempts from a client to connect at port: {port}
+// Listening on port 5000
+app.listen(port, () => {
     console.log(`Now listening on port ${port}`); 
 });
 

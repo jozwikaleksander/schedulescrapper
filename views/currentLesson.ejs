@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Najbliższa lekcja</title>
+    
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        table{
+            width:500px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Następna lekcja</h2>
+    <script>
+        let res=[/-JSON.stringify(resValue)/];
+
+        let table = document.createElement("table");
+        let thead = document.createElement("thead");
+        let tbody = document.createElement("tbody");
+
+        let headRow = document.createElement("tr");
+        let headers = Object.keys(res);
+        for (let i = 0; i < headers.length; i++) {
+            let th = document.createElement("th");
+            th.innerHTML = headers[i];
+            headRow.appendChild(th);
+        }
+
+        thead.appendChild(headRow);
+
+        let bodyRow = document.createElement("tr");
+        for (let i = 0; i < headers.length; i++) {
+            let td = document.createElement("td");
+            td.innerHTML += `${res[headers[i]]}`.replace(/\n/g, "<br>");
+            bodyRow.appendChild(td);
+        }
+        tbody.appendChild(bodyRow);
+
+        table.appendChild(thead);
+        table.appendChild(tbody);
+
+        document.body.appendChild(table);
+    </script>
+
+    <a href="/" class="go-back-btn">Go back to home page</a>
+</body>
+</html>

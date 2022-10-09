@@ -1,0 +1,230 @@
+:root{
+    --accent-color: #b8bb26;
+    --transition: .2s linear all;
+    --background-color: #282828;
+    --foreground-color: #303030;
+    --light-background: #504945;
+    --text-color: #fff;
+    --font-family: 'Iosevka', monospace;
+    --font-size: 14px;
+}
+body{
+    font-family:var(--font-family);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--background-color);
+    color: #fff;
+    padding: 0;
+    margin: 0;
+    font-size: var(--font-size);    
+}
+table{
+    width:80vw;
+    border: var(--accent-color) 1px solid;
+    -webkit-box-shadow: 10px 10px 15px 3px rgba(0,0,0,0.15);
+    -moz-box-shadow: 10px 10px 15px 3px rgba(0,0,0,0.15);
+    box-shadow: 10px 10px 15px 3px rgba(0,0,0,0.15);
+}
+thead tr {
+    background-color: var(--accent-color);
+    color: #000;
+    text-align: left;
+}
+th,td {
+    padding: 12px 15px;
+}
+tbody tr {
+    background-color: var(--foreground-color);
+    border-bottom: 1px solid var(--accent-color);
+}
+
+body tr:nth-of-type(even) {
+    background-color: var(--light-background);
+}
+
+tbody tr:last-of-type {
+    border-bottom: 2px solid var(--accent-color);
+}
+
+.styled-table tbody tr.active-row {
+    font-weight: bold;
+    color: var(--accent-color);
+}
+@media screen and (max-width: 1560px) {
+    table {
+        width: 95vw;
+    }  
+}
+@media screen and (max-width: 1350px) {
+    th,td {
+        padding: 2px 5px;
+    }  
+}
+@media screen and (max-width: 1050px) {
+    th,td {
+        font-size: 12px;
+    }  
+}
+
+/* HOME PAGE */
+
+.wrapper{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+    border-radius: 10px;
+    background-color: var(--foreground-color);
+    padding:  0 0 30px 0;
+    -webkit-box-shadow: 10px 10px 15px 3px rgba(0,0,0,0.1);
+    -moz-box-shadow: 10px 10px 15px 3px rgba(0,0,0,0.1);
+    box-shadow: 10px 10px 15px 3px rgba(0,0,0,0.1);
+}
+@media screen and (min-width: 1500px) {
+    form{
+        width: 25vw;
+    }
+}
+@media screen and (max-width: 1500px) and (min-width: 1000px) {
+    form{
+        width: 40vw;
+    }
+}
+@media screen and (max-width: 1000px) and (min-width:650px) {
+    form{
+        width: 50vw;
+    }
+}
+@media screen and (max-width: 650px) and (min-width:400px){
+    form{
+        width: 80vw;
+    }  
+}
+@media screen and (max-width: 400px){
+    form{
+        width: 95vw;
+    }  
+}
+input[type='text']{
+    min-width:300px;
+    height: 30px;
+    border: none;
+    color: var(--text-color);
+    background: none;
+    border-bottom: 1px solid var(--accent-color);
+    padding: 3px 10px;
+    margin: 10px 0;
+    transition:  var(--transition);
+    font-family: var(--font-family);
+}
+input[type='text']:focus,
+input[type='text']:hover{
+    outline: none;
+    background: var(--light-background);
+}
+input[type="radio"] {
+    /* remove standard background appearance... */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    /* create custom radio button appearance */
+    display: inline-block;
+    width: 15px;
+    height: 15px;  
+    padding: 3px;
+    background-clip: content-box;
+    border: 2px solid var(--light-background);
+    background: var(--foreground-color);
+    border-radius: 50%;
+    margin-right: 10px;
+    transition: var(--transition);
+}
+input[type="radio"]:checked {
+    background-color: var(--accent-color);
+}
+input[type='submit']{
+    min-width:300px;
+    border: 1px solid var(--accent-color);
+    background: none;
+    padding: 10px;
+    border-radius: 30px;
+    transition:  var(--transition);
+    color: #b8bb26;
+}
+input[type='submit']:hover{
+    background: var(--accent-color);
+    color: #fff;
+}
+.banner{
+    overflow: hidden;
+    height: 50px;
+    border-radius: 10px 10px 0 0;
+    margin-bottom: 20px;
+}
+img{
+    max-width: 100%;
+}
+#day{
+    border: none;
+    border-left: 1px solid var(--accent-color);
+    border-right: 1px solid var(--accent-color);
+    background: none;
+    padding: 10px 20px;
+    color: var(--text-color);
+}
+#day:focus{
+    outline:none;
+}
+#day > option{
+    background: var(--light-background);
+    transition:var(--transition);
+    display: block;
+}
+input[type='time']{
+    min-width:150px;
+    height: 30px;
+    border: none;
+    color: var(--text-color);
+    background: none;
+    border-bottom: 1px solid var(--accent-color);
+    padding: 3px 10px;
+    margin: 10px 0;
+    transition:  var(--transition);
+    font-family: var(--font-family);
+}
+input[type='time']:focus,
+input[type='time']:hover{
+    outline: none;
+    background: var(--light-background);
+}
+input[type="time"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+}
+.go-back-btn{
+    color: white;
+    text-decoration: none;
+    display: block;
+    margin-top: 30px;
+    background: none;
+    border: 1px solid var(--accent-color);
+    padding: 10px 30px;
+    transition:  var(--transition);
+    border-radius: 30px;
+}
+.go-back-btn:hover,
+.go-back-btn:focus{
+    background: var(--accent-color);
+    outline: none;
+    color: black;
+}

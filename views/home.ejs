@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <div class="wrapper">
+        <form action="">
+            <div class="banner"><img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2Foriginals%2F95%2F75%2F92%2F957592dd6b8a80094888a34e61dd0d40.gif&f=1&nofb=1&ipt=961b6b9943b4a541fe3052529e4ad20604032bc56e40ac44f94dfddb713ac410&ipo=images" alt=""></div>
+            <p>Wpisz nazwę obiektu lub URL (klasa, inicjały)</p>
+            <label for="name"><input type="text" name="name" id=""value="https://plan.elektronik.edu.pl/plany/o31.html"></label><br>
+            <p>Wybierz rodzaj zapytania:</p>
+            <label for="schedule"> <input type="radio" id="schedule" checked name="query" value="schedule">Plan zajęć</label><br>
+            <label for="currentLesson"> <input type="radio" id="currentLesson" name="query" value="currentLesson">Najbliższa lekcja</label>
+            <br>
+            <label for="time">Godzina: <input type="time" name="time" id="time-input"></label>
+            <br>
+
+            <label for="day">Dzień tygodnia:
+                <select name="day" id="day">
+                    <option value="1">Poniedziałek</option>
+                    <option value="2">Wtorek</option>
+                    <option value="3">Środa</option>
+                    <option value="4">Czwartek</option>
+                    <option value="5">Piątek</option>
+                </select>
+            </label>
+
+            <br>
+            <br>
+            <input type="submit" value="Zapisz">
+        </form>
+    </div>
+
+    <script src="js/home.js"></script>
+</body>
+</html>
