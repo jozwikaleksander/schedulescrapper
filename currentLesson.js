@@ -222,6 +222,4 @@ const goToTheNextDay = (dayName,data,time) => {
     return [timeInMinutes, dayName];
 }
 // Exporting the main function
-module.exports = {
-    getCurrentLesson
-} 
+module.exports = getCurrentLesson

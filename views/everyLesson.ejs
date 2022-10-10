@@ -4,33 +4,32 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plan zajęć</title>
+    <title>Wszystkie lekcje w [/-JSON.stringify(resValue)[0]['day']/]</title>
     
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <h2>Plan lekcji</h2>
+    <h2>Wszystkie lekcje w</h2>
     <script>
         let res=[/-JSON.stringify(resValue)/];
 
-        console.log(res);
-
         let table = document.createElement("table");
-        let tableHead = document.createElement('thead');
-        let tableBody = document.createElement('tbody');
-        let headers = ['Nr','Lekcja','Czas trwania']
-        let cols = headers.length;
-        let tr = document.createElement("tr");
-            for (let i = 0; i < cols; i++) {
-                let th = document.createElement("th");
-                th.innerHTML = headers[i];
-                tr.appendChild(th);
-            }
-            tableHead.appendChild(tr);
-        table.appendChild(tableHead);
+        let thead = document.createElement("thead");
+        let tbody = document.createElement("tbody");
 
-        for (let index = 0; index < res[0].length; index++) {
-            let data = res[0][index];
+        let headRow = document.createElement("tr");
+
+        let headers = Object.keys(res[0]);
+        for (let i = 0; i < headers.length-1; i++) {
+            let th = document.createElement("th");
+            th.innerHTML = headers[i];
+            headRow.appendChild(th);
+        }
+
+        thead.appendChild(headRow);
+
+       for (let index = 0; index < res.length; index++) {
+            let data = res[index];
             let tr = document.createElement("tr");
             let html = "";
 
@@ -38,13 +37,17 @@
                 html += "<td>" + data[headers[j]].replace(/\n/g, "<br>") + "</td>";
             }
             tr.innerHTML = html;
-            tableBody.appendChild(tr);
+            tbody.appendChild(tr);
         }
 
-        table.appendChild(tableBody);
+        table.appendChild(thead);
+        table.appendChild(tbody);
+
         document.body.appendChild(table);
     </script>
     
+    <!-- [/-JSON.stringify(resValue)/] -->
+
     <a href="/" class="go-back-btn">Go back to home page</a>
 </body>
 </html>
