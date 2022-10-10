@@ -54,7 +54,8 @@ app.get('/', (req, res) => {
                   return item.split(',');
               }
             })
-            if(result.length > 0){
+            // if object was found
+            if(result.length == 1){
               result = result[0].split(',')[0];
               if(queryType=='schedule'){
                 res.redirect('/?'+'q='+queryType+'&url='+url+result);
@@ -65,6 +66,13 @@ app.get('/', (req, res) => {
               else if(queryType=='everyLesson' && (day != "" || day != undefined)){
                 res.redirect('/?'+'q='+queryType+'&url='+url+result+"&d="+day);
               }
+            }
+            else if(result.length > 1){
+              res.render('home', {error: 'Więcej niż jeden obiekt pasuje do wprowadzonej nazwy. Spróbuj wprowadzić bardziej szczegółową nazwę.'});
+            }
+            // if not report an error
+            else{
+              res.render('home', {error: 'Nie znaleziono obiektu'});
             }
           }
         });
@@ -99,7 +107,7 @@ app.get('/', (req, res) => {
     }
     else{
       // If not send the main page
-      res.render('home');
+      res.render('home', {error: ''});
     }
 });
 

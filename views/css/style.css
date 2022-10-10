@@ -4,10 +4,19 @@
     --background-color: #282828;
     --foreground-color: #303030;
     --light-background: #504945;
+    --error-color: #ee5850;
     --text-color: #fff;
     --font-family: 'Iosevka', monospace;
     --font-size: 14px;
 }
+/* Utilities */
+.hidden{
+    display: none;
+}
+.mt{
+    margin-top: 30px;
+}
+
 /* Tags */
 body{
     font-family:var(--font-family);
@@ -163,17 +172,16 @@ input[type='submit']{
     padding: 10px;
     border-radius: 30px;
     transition:  var(--transition);
-    color: #b8bb26;
+    color: var(--accent-color);
 }
 input[type='submit']:hover{
     background: var(--accent-color);
-    color: #fff;
+    color: var(--text-color);
 }
 .banner{
     overflow: hidden;
     height: 50px;
     border-radius: 10px 10px 0 0;
-    margin-bottom: 20px;
 }
 img{
     max-width: 100%;
@@ -242,12 +250,22 @@ input[type="time"]::-webkit-calendar-picker-indicator {
     transition: var(--transition);
 }
 .less{
-    height: 0;
+    height:0px;
 }
 .more{
-    height: 100px;
+    height:100px;
 }
-#dynamic-container{
+#current-lesson-container{
     transition: var(--transition);
     overflow: hidden;
+}
+#every-lesson-container{
+    transition: var(--transition);
+    overflow: hidden;
+}
+.error{
+    background-color: var(--error-color);
+    width: 100%;
+    text-align: center;
+    padding: 10px 0;
 }

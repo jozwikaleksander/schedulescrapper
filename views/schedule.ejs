@@ -15,10 +15,12 @@
 
         console.log(res);
 
+        console.log(res);
+
         let table = document.createElement("table");
         let tableHead = document.createElement('thead');
         let tableBody = document.createElement('tbody');
-        let headers = ['Nr','Lekcja','Czas trwania']
+        let headers = Object.keys(res[0][0]);
         let cols = headers.length;
         let tr = document.createElement("tr");
             for (let i = 0; i < cols; i++) {
@@ -34,8 +36,8 @@
             let tr = document.createElement("tr");
             let html = "";
 
-            for (let j = 0; j < 3; j++) {
-                html += "<td>" + data[headers[j]].replace(/\n/g, "<br>") + "</td>";
+            for (let j = 0; j < headers.length; j++) {
+                html += "<td>" + data[[headers[j]]].replace(/\n/g, "<br>") + "</td>";
             }
             tr.innerHTML = html;
             tableBody.appendChild(tr);

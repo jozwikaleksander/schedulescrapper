@@ -8,11 +8,11 @@ const dayInput = document.querySelector('#day');
 
 const timeLabel = document.querySelector('#time-label');
 const dayLabel = document.querySelector('#day-label');
-const dynamicContainer = document.querySelector('#dynamic-container');
+const currentLessonContainer = document.querySelector('#current-lesson-container');
 const scheduleRadio = document.querySelector('#schedule');
+const everyLessonRadio = document.querySelector('#everyLesson');
+const everyLessonContainer = document.querySelector('#every-lesson-container');
 
-currentLessonRadio.checked = false;
-scheduleRadio.checked = true;
 
 let hours = date.getHours();
 let minutes = date.getMinutes();
@@ -35,10 +35,6 @@ form.addEventListener('submit', function(e) {
     let day = dayInput.value;
     let name = form.elements.name.value;
 
-    console.log(name);
-
-    console.log(day);
-
     if(name == ''&&url[url.length-1] == 'l'){
         window.open(`?q=${option}&url=${url}&t=${time}&d=${day}`,'_self');
     }
@@ -47,19 +43,18 @@ form.addEventListener('submit', function(e) {
         window.open(`?q=${option}&url=${url}&t=${time}&d=${day}&n=${name}`,'_self');
     }
 });
+const radioChecked = (e) => {
+    const id = e.id;
 
-currentLessonRadio.addEventListener('change', () => {
-    if(currentLessonRadio.checked) {
-        dynamicContainer.className = 'more';
-    } else{
-        dynamicContainer.className = 'less';
+    if(id == "currentLesson") {
+        $(currentLessonContainer).animate({height:100},200);
+        $(everyLessonContainer).animate({height:0},200);
+    } else if(id == "everyLesson") {
+        $(everyLessonContainer).animate({height:30},200);
+        $(currentLessonContainer).animate({height:0},200);
     }
-});
-
-scheduleRadio.addEventListener('click', () => {
-    if(scheduleRadio.checked) {
-        dynamicContainer.className = 'less';
-    } else{
-        dynamicContainer.className = 'more';
+    else{
+        $(everyLessonContainer).animate({height:0},200);
+        $(currentLessonContainer).animate({height:0},200);
     }
-});
+}

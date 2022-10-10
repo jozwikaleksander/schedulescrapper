@@ -14,20 +14,21 @@
     <div class="wrapper">
         <form action="">
             <div class="banner"><img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2Foriginals%2F95%2F75%2F92%2F957592dd6b8a80094888a34e61dd0d40.gif&f=1&nofb=1&ipt=961b6b9943b4a541fe3052529e4ad20604032bc56e40ac44f94dfddb713ac410&ipo=images" alt=""></div>
-            <p>Wpisz adres URL plan lekcji</p>
+            <div class="error hidden"></div>
+            <p class="mt">Wpisz adres URL plan lekcji</p>
             <label for="url"><input type="text" name="url" required id=""value="https://plan.elektronik.edu.pl/"></label><br>
             <p>Wpisz nazwę obiektu (klasa, inicjały nauczyciela)</p>
             <label for="name"><input type="text" name="name" id=""placeholder="Opcjonalnie"></label><br>
             <p>Wybierz rodzaj zapytania:</p>
-            <label for="schedule"> <input type="radio" id="schedule" checked name="query" value="schedule">Plan zajęć</label><br>
-            <label for="currentLesson"> <input type="radio" id="currentLesson" name="query" value="currentLesson">Najbliższa lekcja</label>
+            <label for="schedule"> <input type="radio" id="schedule" checked name="query" onclick="radioChecked(this)" value="schedule">Plan zajęć</label><br>
+            <label for="currentLesson"> <input type="radio" id="currentLesson" name="query"onclick="radioChecked(this)" value="currentLesson">Najbliższa lekcja</label>
             <br>
-            <div id="dynamic-container" class="less">
+            <div id="current-lesson-container" class="less">
                 <label id='time-label'for="time">Godzina: <input type="time" name="time" id="time-input"></label>
                 <br>
 
                 <label id='day-label' for="day">Dzień tygodnia:
-                    <select name="day" id="day" class="hidden">
+                    <select name="day" id="day">
                         <option value=1>Poniedziałek</option>
                         <option value=2>Wtorek</option>
                         <option value=3>Środa</option>
@@ -37,12 +38,23 @@
                 </label>
             </div>
 
+            <label for="everyLesson"> <input type="radio" id="everyLesson" name="query" onclick="radioChecked(this)"value="everyLesson">Wszystkie lekcje w danym dniu</label>
+            <br>
+            
             <br>
             <br>
             <input type="submit" value="Wyślij">
         </form>
     </div>
 
+    <script>
+        let err = "[/-error/]";
+        let errorBox = document.querySelector('.error');
+        if(err != ""){
+            errorBox.classList.remove('hidden');
+            errorBox.innerHTML = err;
+        }
+    </script>
     <script src="js/home.js"></script>
 </body>
 </html>
