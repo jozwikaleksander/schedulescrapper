@@ -4,14 +4,17 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wszystkie lekcje w [/-JSON.stringify(resValue)[0]['day']/]</title>
+    <title>Wszystkie lekcje w</title>
     
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <h2>Wszystkie lekcje w</h2>
+    <h2 class="title">Wszystkie lekcje w</h2>
     <script>
         let res=[/-JSON.stringify(resValue)/];
+
+        document.title = 'Wszystkie lekcje dla ' + "[/-objName/]" +' w dniu: ' + res[0]['Dzień'];
+        document.querySelector('.title').innerHTML = 'Wszystkie lekcje dla ' + "[/-objName/]" + ' w dniu: ' + res[0]['Dzień'];
 
         let table = document.createElement("table");
         let thead = document.createElement("thead");
@@ -45,8 +48,6 @@
 
         document.body.appendChild(table);
     </script>
-    
-    <!-- [/-JSON.stringify(resValue)/] -->
 
     <a href="/" class="go-back-btn">Go back to home page</a>
 </body>

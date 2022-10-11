@@ -30,6 +30,30 @@ body{
     margin: 0;
     font-size: var(--font-size);    
 }
+img{
+    max-width: 100%;
+}
+h2{
+    text-align: center;
+}
+ul{
+    list-style-type: none;
+    display: flex;
+    justify-content: space-around;
+    margin: 0;
+    padding: 0;
+}
+ul li{
+    display: block;
+    margin: 0 10px;
+}
+a{
+    color: var(--accent-color);
+    text-decoration: none;
+}
+li:hover a{
+    text-decoration: underline var(--accent-color) solid; 
+}
 table{
     width:80vw;
     border: var(--accent-color) 1px solid;
@@ -58,7 +82,7 @@ tbody tr:last-of-type {
     border-bottom: 2px solid var(--accent-color);
 }
 
-.styled-table tbody tr.active-row {
+table tbody tr.active-row {
     font-weight: bold;
     color: var(--accent-color);
 }
@@ -103,6 +127,7 @@ form{
 
     transition: var(--transition);
 }
+/* MEDIA QUERIES FOR FORM */
 @media screen and (min-width: 1500px) {
     form{
         width: 25vw;
@@ -128,6 +153,13 @@ form{
         width: 95vw;
     }  
 }
+.banner{
+    overflow: hidden;
+    height: 50px;
+    border-radius: 10px 10px 0 0;
+}
+
+/* INPUTS */
 input[type='text']{
     min-width:300px;
     height: 30px;
@@ -146,11 +178,9 @@ input[type='text']:hover{
     background: var(--light-background);
 }
 input[type="radio"] {
-    /* remove standard background appearance... */
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    /* create custom radio button appearance */
     display: inline-block;
     width: 15px;
     height: 15px;  
@@ -161,6 +191,7 @@ input[type="radio"] {
     border-radius: 50%;
     margin-right: 10px;
     transition: var(--transition);
+    margin-bottom: 5px;
 }
 input[type="radio"]:checked {
     background-color: var(--accent-color);
@@ -173,37 +204,39 @@ input[type='submit']{
     border-radius: 30px;
     transition:  var(--transition);
     color: var(--accent-color);
+    margin-top: 20px;
 }
 input[type='submit']:hover{
     background: var(--accent-color);
     color: var(--text-color);
 }
-.banner{
-    overflow: hidden;
-    height: 50px;
-    border-radius: 10px 10px 0 0;
-}
-img{
-    max-width: 100%;
-}
-#cl-day{
+select{
     border: none;
     border-bottom: 1px solid var(--accent-color);
     background: none;
     padding: 10px 20px;
     color: var(--text-color);
 }
-#cl-day:focus,
-#cl-day:hover
+select:focus,
+select:hover
 {
     background-color: var(--light-background);
     outline:none;
 }
-#cl-day > option{
+select > option{
     background: var(--light-background);
     transition:var(--transition);
     display: block;
 }
+#cl-container{
+    transition: var(--transition);
+    overflow: hidden;
+}
+#el-container{
+    transition: var(--transition);
+    overflow: hidden;
+}
+
 input[type='time']{
     min-width:150px;
     height: 30px;
@@ -241,20 +274,7 @@ input[type="time"]::-webkit-calendar-picker-indicator {
     outline: none;
     color: black;
 }
-/* .less{
-    height:0px;
-}
-.more{
-    height:100px;
-} */
-#cl-container{
-    transition: var(--transition);
-    overflow: hidden;
-}
-#el-container{
-    transition: var(--transition);
-    overflow: hidden;
-}
+
 .error{
     background-color: var(--error-color);
     width: 100%;

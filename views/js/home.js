@@ -4,13 +4,13 @@ const date = new Date();
 
 // Current lesson inputs / containers
 const clRadio = document.querySelector('#currentLesson');
-const clTime = document.querySelector('#cl-time-input');
+const clTime = document.querySelector('#cl-time');
 const clDay = document.querySelector('#cl-day');
 const clContainer = document.querySelector('#cl-container');
 
 const scheduleRadio = document.querySelector('#schedule');
-const everyLessonRadio = document.querySelector('#everyLesson');
-const everyLessonContainer = document.querySelector('#every-lesson-container');
+const elRadio = document.querySelector('#everyLesson');
+const elContainer = document.querySelector('#el-container');
 
 let hours = date.getHours();
 let minutes = date.getMinutes();
@@ -24,25 +24,35 @@ if (hours < 10) {
 
 clDay.value = date.getDay();
 
-timeInput.defaultValue = hours + ':' +minutes;
+clTime.value = hours + ':' +minutes;
 
 $(clContainer).height(0);
+$(elContainer).height(0);
 
 // Submiting form without reloading the website
 form.addEventListener('submit', function(e) {
     e.preventDefault();
     let url = form.elements.url.value;
-    let option = form.elements.query.value;
-    let time = form.elements.time.value;
-    let clDay = form.elements.clDay.value;
     let name = form.elements.name.value;
+    let option = form.elements.query.value;
+    let time = '';
+    let day = '';
 
-    if(name == ''&&url[url.length-1] == 'l'){
-        window.open(`?q=${option}&url=${url}&t=${time}&d=${cl-day}`,'_self');
+    if(option == 'currentLesson') {
+        time = form.elements.clTime.value;
+        day = form.elements.clDay.value;
+    } else if(option=='everyLesson'){
+        day = form.elements.elDay.value;
     }
-    else if (url[url.length-1] != 'l'){
-        console.log(url[url.length-1]);
-        window.open(`?q=${option}&url=${url}&t=${time}&d=${cl-day}&n=${name}`,'_self');
+    
+    if(name == ''){
+        window.open(`?q=${option}&url=${url}&t=${time}&d=${day}`,'_self');
+    }
+    else if (name!=''){
+        window.open(`?q=${option}&url=${url}&t=${time}&d=${day}&n=${name}`,'_self');
+    }
+    else{
+        showError('Podano złe dane');
     }
 });
 const radioChecked = (e) => {
@@ -50,13 +60,19 @@ const radioChecked = (e) => {
 
     if(id == "currentLesson") {
         $(clContainer).animate({height:100},200);
-        $(everyLessonContainer).animate({height:0},200);
+        $(elContainer).animate({height:0},200);
     } else if(id == "everyLesson") {
-        $(everyLessonContainer).animate({height:30},200);
+        $(elContainer).animate({height:40},200);
         $(clContainer).animate({height:0},200);
     }
     else{
-        $(everyLessonContainer).animate({height:0},200);
+        $(elContainer).animate({height:0},200);
         $(clContainer).animate({height:0},200);
     }
+}
+const showError = (txt) => {
+    let errorBox = document.querySelector('.error');
+
+    errorBox.innerHTML = txt;
+    errorBox.classList.remove('hidden');
 }

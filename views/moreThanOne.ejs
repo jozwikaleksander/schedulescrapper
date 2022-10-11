@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="wrapper">
+        <form>
+            <h2>Więcej niż jeden obiekt pasuje do wymienionych kryteriów. Wybierz jeden z nich</h2>
+
+            <div class="form-group">
+                <ul class="objects-list"></ul>
+
+            <a href="/" class="go-back-btn">Go back to home page</a>
+        </form>
+    </div>
+
+    <script>
+        let objList = document.querySelector('.objects-list');
+
+        let objs = [/-JSON.stringify(resValue)/];
+        let name = "[/-name/]";
+        let queryType = "[/-queryType/]";
+        let time = "[/-time/]";
+        let day = "[/-day/]";
+        let url = "[/-url/]";
+
+        for (let i = 0; i < objs.length; i++) {
+            let name = objs[i].split(',')[1];
+            let result = objs[i].split(',')[0];
+            let li = document.createElement('li');
+            let a = document.createElement('a');
+            a.href = `?q=${queryType}&n=${name}&t=${time}&d=${day}&url=${url}` + result;
+            a.innerHTML = name;
+            li.appendChild(a);
+            objList.appendChild(li);
+        }
+    </script>
+</body>
+</html>

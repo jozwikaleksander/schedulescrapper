@@ -19,16 +19,15 @@ const getEveryLesson = (data,day) => {
         dayName = "Poniedziałek";
     }
     data[0].map((lesson) => {
-        if(Object.keys(lesson).includes(dayName)){
+        if(Object.keys(lesson).includes(dayName) && lesson[dayName] != ''){
             lessons.push({
                 'Nr': lesson['Nr'],
                 'Czas trwania': lesson['Godz'],
                 'Lekcja': lesson[dayName],
-                'Dzień': dayName
+                'Dzień': dayName,
             });
         }
     });
-    console.log('Lekcje' + lessons);
     return lessons;
 }
 // Function that checks if day was provided in the URL

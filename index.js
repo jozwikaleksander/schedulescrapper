@@ -36,7 +36,7 @@ app.get('/', (req, res) => {
     // If the query was sent by the user
     if(queryType != undefined){
       // If the name was sent (meaning the URL has to be found)
-      if(name != undefined){
+      if(name != undefined && url.slice(-1) != "l"){
         request(url+'/lista.html', (error, response, html) => {
           if(!error){
             const $ = cheerio.load(html);
@@ -47,15 +47,16 @@ app.get('/', (req, res) => {
 
             let result;
 
-            console.log(name);
-
             result = data.filter((item) => {
               if(item.toLowerCase().includes(name.toLowerCase())){
                   return item.split(',');
               }
             })
+            console.log(result);
             // if object was found
             if(result.length == 1){
+              name = result[0].split(',')[1].slice(0,-1);
+              console.log('Nazwa: '+name);
               result = result[0].split(',')[0];
               if(queryType=='schedule'){
                 res.redirect('/?'+'q='+queryType+'&url='+url+result);
@@ -64,11 +65,11 @@ app.get('/', (req, res) => {
                 res.redirect('/?'+'q='+queryType+'&url='+url+result+'&t='+time+'&d='+day);
               }
               else if(queryType=='everyLesson' && (day != "" || day != undefined)){
-                res.redirect('/?'+'q='+queryType+'&url='+url+result+"&d="+day);
+                res.redirect('/?'+'q='+queryType+'&url='+url+result+"&d="+day+"&n="+name);
               }
             }
             else if(result.length > 1){
-              res.render('home', {error: 'Więcej niż jeden obiekt pasuje do wprowadzonej nazwy. Spróbuj wprowadzić bardziej szczegółową nazwę.'});
+              res.render('moreThanOne', {resValue:result, url:url, queryType:queryType, time:time, day:day, name:name});
             }
             // if not report an error
             else{
@@ -99,7 +100,7 @@ app.get('/', (req, res) => {
             if(responseType=="json"){ // If the response type is JSON
               res.render('empty',{resValue:resValue});
             } else{
-              res.render(queryType,{resValue:resValue});
+              res.render(queryType,{resValue:resValue, objName: name});
             }
           }
         });
