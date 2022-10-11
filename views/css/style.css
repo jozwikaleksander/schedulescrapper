@@ -177,6 +177,14 @@ input[type='text']:hover{
     outline: none;
     background: var(--light-background);
 }
+/* Getting rid of autocompletion changing colors of input */
+input:-webkit-autofill,
+input:-webkit-autofill:focus {
+    transition: background-color 600000s 0s, color 600000s 0s;
+}
+input[data-autocompleted] {
+    background-color: transparent !important;
+}
 input[type="radio"] {
     -webkit-appearance: none;
     -moz-appearance: none;
