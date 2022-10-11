@@ -34,7 +34,7 @@ app.get('/', (req, res) => {
     let name = req.query.n;
 
     // If the query was sent by the user
-    if(queryType != undefined){
+    if(queryType != undefined && validateURLAndName(url,name)){
       // If the name was sent (meaning the URL has to be found)
       if(name != undefined && url.slice(-1) != "l"){
         request(url+'/lista.html', (error, response, html) => {
@@ -84,23 +84,28 @@ app.get('/', (req, res) => {
             let data = getTable(html);
             // Response variable
             let resValue;
-      
-            // Checking the query type
-            if(queryType=="schedule"){ // If the query type is schedule
-              // Sending the schedule data
-              resValue = data;
-            }
-            else if(queryType=="currentLesson"){ // If the query type is currentLesson
-              // Getting current lesson with provided information
-              resValue = getCurrentLesson(data,time,day);
-            }
-            else if(queryType=='everyLesson'){ // If the query type is everyLesson
-              resValue = getEveryLesson(data,day);
-            }
-            if(responseType=="json"){ // If the response type is JSON
-              res.render('empty',{resValue:resValue});
+            
+            // Check if data is not empty
+            if(data!=undefined){
+              // Checking the query type
+              if(queryType=="schedule"){ // If the query type is schedule
+                // Sending the schedule data
+                resValue = data;
+              }
+              else if(queryType=="currentLesson"){ // If the query type is currentLesson
+                // Getting current lesson with provided information
+                resValue = getCurrentLesson(data,time,day);
+              }
+              else if(queryType=='everyLesson'){ // If the query type is everyLesson
+                resValue = getEveryLesson(data,day);
+              }
+              if(responseType=="json"){ // If the response type is JSON
+                res.render('empty',{resValue:resValue});
+              } else{
+                res.render(queryType,{resValue:resValue, objName: name, dayName: getDayName(day)});
+              }
             } else{
-              res.render(queryType,{resValue:resValue, objName: name});
+              res.render('home', {error: 'Nie znaleziono obiektu'});
             }
           }
         });
@@ -128,5 +133,18 @@ const getTable = (html) =>{
 
   return data;
 }
-
+const getDayName = (day) =>{
+  let dayName = '';
+  let days = ['poniedziałek','wtorek','środa','czwartek','piątek','sobota','niedziela'];
+  if(day != undefined){
+    dayName = days[day-1];
+  }
+  return dayName;
+}
+const validateURLAndName = (url,name) =>{
+  if(url.slice(-1) != "l" && name==undefined){
+    return false;
+  }
+  return true;
+}
 module.exports = app;
