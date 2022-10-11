@@ -23,12 +23,12 @@
             <label for="schedule"> <input type="radio" id="schedule" checked name="query" onclick="radioChecked(this)" value="schedule">Plan zajęć</label><br>
             <label for="currentLesson"> <input type="radio" id="currentLesson" name="query"onclick="radioChecked(this)" value="currentLesson">Najbliższa lekcja</label>
             <br>
-            <div id="current-lesson-container" class="less">
-                <label id='time-label'for="time">Godzina: <input type="time" name="time" id="time-input"></label>
+            <div id="cl-container" class="less">
+                <label for="cl-time">Godzina: <input type="time" name="cl-time" id="cl-time"></label>
                 <br>
 
-                <label id='day-label' for="day">Dzień tygodnia:
-                    <select name="day" id="day">
+                <label for="cl-day">Dzień tygodnia:
+                    <select name="cl-day" id="cl-day">
                         <option value=1>Poniedziałek</option>
                         <option value=2>Wtorek</option>
                         <option value=3>Środa</option>

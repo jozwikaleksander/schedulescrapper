@@ -186,20 +186,20 @@ input[type='submit']:hover{
 img{
     max-width: 100%;
 }
-#day{
+#cl-day{
     border: none;
     border-bottom: 1px solid var(--accent-color);
     background: none;
     padding: 10px 20px;
     color: var(--text-color);
 }
-#day:focus,
-#day:hover
+#cl-day:focus,
+#cl-day:hover
 {
     background-color: var(--light-background);
     outline:none;
 }
-#day > option{
+#cl-day > option{
     background: var(--light-background);
     transition:var(--transition);
     display: block;
@@ -241,25 +241,17 @@ input[type="time"]::-webkit-calendar-picker-indicator {
     outline: none;
     color: black;
 }
-
-#day-label{
-    transition: var(--transition);
-}
-
-#time-label{
-    transition: var(--transition);
-}
-.less{
+/* .less{
     height:0px;
 }
 .more{
     height:100px;
-}
-#current-lesson-container{
+} */
+#cl-container{
     transition: var(--transition);
     overflow: hidden;
 }
-#every-lesson-container{
+#el-container{
     transition: var(--transition);
     overflow: hidden;
 }
