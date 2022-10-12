@@ -46,7 +46,7 @@ app.get('/', (req, res) => {
             }).get();
 
             let result;
-
+            // TODO: Option to match the word
             result = data.filter((item) => {
               if(item.toLowerCase().includes(name.toLowerCase())){
                   return item.split(',');

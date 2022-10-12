@@ -1,6 +1,8 @@
 // Getting current lesson
 const getCurrentLesson = (data,time,providedDayIndex) => {
     let response = "";
+
+    // FIXME: Error for data EZ 0:59 Piątek
     
     // Getting the current time
     let date = new Date();
@@ -47,18 +49,22 @@ const getCurrentLesson = (data,time,providedDayIndex) => {
         // If it is a school day, check if it is too early
         if(checkIfTooEarly(data,timeInMinutes,dayName)){
             // If it is too early, set time to the time when the first lesson starts
+            console.log(dayName);
             timeInMinutes = timeToMinutes(getFirstLesson(data,time,dayName)['Godz'])[0];
         } else if (checkIfTooLate(data,timeInMinutes,dayName)){
             // If it is too late, change day to the next school day (e.g. Tuesday -> Wednesday) and set time to the time when the first lesson starts
             let result = goToTheNextDay(dayName,data,time);
             dayName = result[1];
             timeInMinutes = result[0];
+        } else if(checkIfAnyLessonsToday(data,dayName)){
+            dayName = getWorkingDay(data,dayName);
+        } else{
+            return 'Error';
         }
     }
 
     // Getting the current lesson
     currentLesson = getLesson(data,timeInMinutes,dayName);
-    // Finding the current lesson`s index
     
     return currentLesson;
 }
@@ -107,7 +113,7 @@ const getDayIndex = (dayName) => {
 // Check if provided time is beforee the first lesson starts
 const checkIfTooEarly = (data,time,day) => {
     let lesson = getLesson(data,time,day);
-    if(lesson){
+    if(lesson.info != ""){
         let interval = timeToMinutes(lesson['interval'].join("-"));        
         if(interval[0] > time && lesson['index'] == 0){
             console.log('Too early');
@@ -120,7 +126,7 @@ const checkIfTooEarly = (data,time,day) => {
 const checkIfTooLate = (data,time,day) => {
     let lesson = getLastLesson(data,time,day);
 
-    if(lesson){
+    if(lesson[day] != "" && lesson[day] != undefined && lesson != undefined){
         let interval = timeToMinutes(lesson['Godz']);        
         if(interval[1] < time){
             console.log('Too late');
@@ -220,6 +226,32 @@ const goToTheNextDay = (dayName,data,time) => {
     let timeInMinutes = timeToMinutes(firstLesson['Godz'])[0];
 
     return [timeInMinutes, dayName];
+}
+// Check if the are any lessons in this day (primarly for teachers and classes)
+const checkIfAnyLessonsToday = (data,day) => {
+    for(let i = 0; i < data[0].length; i++){
+        let lesson = data[0][i];
+        if(lesson){
+            if(lesson[day] != ""){
+                return true;
+            }
+        }
+    } 
+    return false;
+}
+// Get day where there are any lessons
+const getWorkingDay = (data,day) => {
+    let workingDay = {};
+
+    while(checkIfAnyLessonsToday(data,day) == false){
+        if(day == "Piątek"){
+            day = "Poniedziałek";
+        }
+        else{
+            day = getDayName(getDayIndex(day)+1);   
+        }
+    }
+    return day;
 }
 // Exporting the main function
 module.exports = getCurrentLesson
