@@ -44,7 +44,6 @@ ul{
     padding: 0;
 }
 ul li{
-    display: block;
     margin: 0 10px;
 }
 a{
@@ -67,7 +66,7 @@ thead tr {
     text-align: left;
 }
 th,td {
-    padding: 12px 15px;
+    padding: 6px 8px;
 }
 tbody tr {
     background-color: var(--foreground-color);

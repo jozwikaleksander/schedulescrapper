@@ -15,9 +15,14 @@
     </style>
 </head>
 <body>
-    <h2>Następna lekcja dla [/-objName/] w dniu: [/-dayName/]</h2>
+    <h2></h2>
     <script>
         let res=[/-JSON.stringify(resValue)/];
+
+        let day = res.day;
+        let name = '[/-objName/]';
+
+        document.querySelector('h2').innerHTML = `Następna lekcja dla ${name} w dniu: ${day}`;
 
         let table = document.createElement("table");
         let thead = document.createElement("thead");

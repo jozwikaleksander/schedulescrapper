@@ -55,14 +55,14 @@ app.get('/', (req, res) => {
             console.log(result);
             // if object was found
             if(result.length == 1){
-              name = result[0].split(',')[1].slice(0,-1);
+              name = result[0].split(',')[1];
               console.log('Nazwa: '+name);
               result = result[0].split(',')[0];
               if(queryType=='schedule'){
                 res.redirect('/?'+'q='+queryType+'&url='+url+result);
               }
               else if(queryType=='currentLesson'){
-                res.redirect('/?'+'q='+queryType+'&url='+url+result+'&t='+time+'&d='+day);
+                res.redirect('/?'+'q='+queryType+'&url='+url+result+'&t='+time+'&d='+day+"&n="+name);
               }
               else if(queryType=='everyLesson' && (day != "" || day != undefined)){
                 res.redirect('/?'+'q='+queryType+'&url='+url+result+"&d="+day+"&n="+name);
@@ -77,7 +77,7 @@ app.get('/', (req, res) => {
             }
           }
         });
-      } else{
+      } else if(validateURLAndName(url,name)){
         // If the URL was sent (meaning the URL links to the file)
         request(url, function(error, response, html) {
           if (!error) {
@@ -111,9 +111,12 @@ app.get('/', (req, res) => {
         });
       }
     }
-    else{
+    else if (url == undefined && name == undefined){
       // If not send the main page
       res.render('home', {error: ''});
+    }
+    else{
+      res.render('home',{error:'Podaj nazwę obiektu'});
     }
 });
 
