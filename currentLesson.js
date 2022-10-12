@@ -15,8 +15,6 @@ const getCurrentLesson = (data,time,providedDayIndex) => {
     }
     // Calculating current time in minutes from the beginning of the day (e.g. 8:30 -> 510));
     let timeInMinutes = (hours*60) + minutes;
-    // Creating a variable that will store the index of current lesson
-    let currentLessonIndex = 0;
 
     // Creating a variable that will store current lesson object
     let currentLesson = {
@@ -135,6 +133,13 @@ const checkIfTooLate = (data,time,day) => {
     return false;
 }
 // Get lesson that is currently happening
+// Result:
+// {
+//     'index': 0,
+//     'interval': [7:00,7:45],
+//     'info': "J.Polski ",
+//     'day':'Poniedziałek'
+// }
 const getLesson = (data,timeInMinutes, day) => {
     let currentLessonIndex = 0;
     for(let i = 0; i < data[0].length; i++){

@@ -32,6 +32,7 @@ app.get('/', (req, res) => {
     let time = req.query.t;
     let day = req.query.d;
     let name = req.query.n;
+    let matchWholeWord = req.query.m;
 
     // If the query was sent by the user
     if(queryType != undefined && validateURLAndName(url,name)){
@@ -46,12 +47,24 @@ app.get('/', (req, res) => {
             }).get();
 
             let result;
-            // TODO: Option to match the word
-            result = data.filter((item) => {
-              if(item.toLowerCase().includes(name.toLowerCase())){
-                  return item.split(',');
-              }
-            })
+            // TODO: Option to match the whole word
+            if(matchWholeWord == "true"){
+              result = data.filter((item) => {
+                let itemArray = item.toLowerCase().split(',');
+                if(itemArray[1].replace('.','') == name.toLowerCase()){
+                    return item.split(',');
+                }
+              });
+            }
+            else{
+              result = data.filter((item) => {
+                let itemArray = item.toLowerCase().split(',');
+                if(itemArray[1].includes(name.toLowerCase())){
+                    return item.split(',');
+                }
+              })
+            }
+            
             console.log(result);
             // if object was found
             if(result.length == 1){
@@ -77,7 +90,7 @@ app.get('/', (req, res) => {
             }
           }
         });
-      } else if(validateURLAndName(url,name)){
+      } else if(validateURLAndName(url,name)){ // If the name wasn't provided check if URL and name are valid
         // If the URL was sent (meaning the URL links to the file)
         request(url, function(error, response, html) {
           if (!error) {
@@ -125,6 +138,7 @@ app.listen(port, () => {
     console.log(`Now listening on port ${port}`); 
 });
 
+// Scrapping table from the HTML
 const getTable = (html) =>{
   let $ = cheerio.load(html);
   // Finding the table with the schedule
@@ -136,6 +150,7 @@ const getTable = (html) =>{
 
   return data;
 }
+// Returns the day name based on the provided index number
 const getDayName = (day) =>{
   let dayName = '';
   let days = ['poniedziałek','wtorek','środa','czwartek','piątek','sobota','niedziela'];
@@ -144,8 +159,10 @@ const getDayName = (day) =>{
   }
   return dayName;
 }
+// Validates the URL and name variable
+// Checks if the URL ands with .html or htm and if the name is empty
 const validateURLAndName = (url,name) =>{
-  if(url.slice(-1) != "l" && name==undefined){
+  if((url.slice(-1) != "l") && name==undefined ){
     return false;
   }
   return true;
