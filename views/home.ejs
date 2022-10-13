@@ -79,18 +79,25 @@
     <div class="settings hidden">
         <h2>Ustawienia <i class="fa fa-cog"></i></h2>
         
-        <label for="mw">
-            <input type="checkbox" name="mw" id="mw"> 
-            <p>Dopasuj całe słowo</p> <i class="fa fa-question-circle mw-explanation-btn"></i>
-        </label>
-
-        <div class="mw-explanation">
-            <p>✔ XX -> XX<br>
-            ❌ XX -> XXY, XXZ</p>
-            </p>
+        <div class="setting-wrapper">
+            <label for="mw">
+                <input type="checkbox" name="mw" id="mw"> 
+                <p>Dopasuj całe słowo</p> <i class="fa fa-question-circle mw-explanation-btn"></i>
+            </label>
+    
+            <div class="mw-explanation">
+                <p>✔ XX -> XX<br>
+                ❌ XX -> XXY, XXZ</p>
+                </p>
+            </div>
+    
+            <label for="json">
+                <input type="checkbox" name="json" id="json"> 
+                <p>Odpowiedź w JSON</p></i>
+            </label>
+            <br>
+            <a href="#" style="display:block;margin-top:15px">Więcej informacji znajdziesz tutaj</a>
         </div>
-
-        <a href="#" style="margin-top:8px">Więcej informacji znajdziesz tutaj</a>
 
         <input type="button" value="Zatwierdź" class="settings-submit">
     </div>
