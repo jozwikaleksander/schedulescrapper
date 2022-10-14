@@ -18,7 +18,7 @@ const app = express();
 const port = 5000;
 app.set('view engine', 'ejs')
 app.use(express.static(__dirname + '/views'));
-app.use(favicon(__dirname + '/views/img/favicon.ico'));
+app.use(favicon(__dirname + '/favicon.ico'));
 
 // Creating TableToJSON object
 const tabletojson = new require('tabletojson').Tabletojson;
