@@ -29,13 +29,14 @@
         let time = "[/-time/]";
         let day = "[/-day/]";
         let url = "[/-url/]";
+        let responseType = "[/-responseType/]";
 
         for (let i = 0; i < objs.length; i++) {
             let name = objs[i].split(',')[1];
             let result = objs[i].split(',')[0];
             let li = document.createElement('li');
             let a = document.createElement('a');
-            a.href = `?q=${queryType}&n=${name}&t=${time}&d=${day}&url=${url}` + result;
+            a.href = `?q=${queryType}&n=${name}&t=${time}&d=${day}&r=${responseType}&url=${url}` + result;
             a.innerHTML = name;
             li.appendChild(a);
             objList.appendChild(li);

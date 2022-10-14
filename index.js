@@ -72,17 +72,17 @@ app.get('/', (req, res) => {
               console.log('Nazwa: '+name);
               result = result[0].split(',')[0];
               if(queryType=='schedule'){
-                res.redirect('/?'+'q='+queryType+'&url='+url+result);
+                res.redirect('/?'+'q='+queryType+'&url='+url+result+'&r='+responseType);
               }
               else if(queryType=='currentLesson'){
-                res.redirect('/?'+'q='+queryType+'&url='+url+result+'&t='+time+'&d='+day+"&n="+name);
+                res.redirect('/?'+'q='+queryType+'&url='+url+result+'&t='+time+'&d='+day+"&n="+name+'&r='+responseType);
               }
               else if(queryType=='everyLesson' && (day != "" || day != undefined)){
-                res.redirect('/?'+'q='+queryType+'&url='+url+result+"&d="+day+"&n="+name);
+                res.redirect('/?'+'q='+queryType+'&url='+url+result+"&d="+day+"&n="+name+'&r='+responseType);
               }
             }
             else if(result.length > 1){
-              res.render('moreThanOne', {resValue:result, url:url, queryType:queryType, time:time, day:day, name:name});
+              res.render('moreThanOne', {resValue:result, url:url, queryType:queryType, time:time, day:day, name:name, responseType:responseType});
             }
             // if not report an error
             else{

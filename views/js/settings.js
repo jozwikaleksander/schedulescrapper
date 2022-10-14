@@ -1,13 +1,21 @@
 const settingsBtn = document.querySelector('.settings-btn');
 const settingsClose = document.querySelector('.settings-submit');
-const settingsCheckBox = document.querySelector('#mw');
-const settingsExplanation = document.querySelector('.mw-explanation');
+
+
+const mwCheckBox = document.querySelector('#mw');
+const mwExplanation = document.querySelector('.mw-explanation');
 const mwExplanationBtn = document.querySelector('.mw-explanation-btn');
 
-$(settingsExplanation).height(0);
+const jsonCheckBox = document.querySelector('#json');
+
+$(mwExplanation).height(0);
 
 if(localStorage.getItem('matchWholeWord') == 'true'){
-    settingsCheckBox.checked = true;
+    mwCheckBox.checked = true;
+}
+
+if(localStorage.getItem('outputInJSON') == 'json'){
+    jsonCheckBox.checked = true;
 }
 
 settingsBtn.addEventListener('click', () => {
@@ -15,11 +23,19 @@ settingsBtn.addEventListener('click', () => {
     $('.settings').toggleClass('hidden');
 });
 
-settingsCheckBox.addEventListener('click', () => {
-    if(settingsCheckBox.checked) {
+mwCheckBox.addEventListener('click', () => {
+    if(mwCheckBox.checked) {
         localStorage.setItem('matchWholeWord', 'true');
     } else {
         localStorage.setItem('matchWholeWord', 'false');
+    }
+});
+
+jsonCheckBox.addEventListener('click', () => {
+    if(jsonCheckBox.checked) {
+        localStorage.setItem('outputInJSON', 'json');
+    } else {
+        localStorage.setItem('outputInJSON', 'html');
     }
 });
 
@@ -29,9 +45,9 @@ settingsClose.addEventListener('click', () => {
 });
 
 mwExplanationBtn.addEventListener('click', () => {
-    if($(settingsExplanation).height() == 0) {
-        $(settingsExplanation).animate({height: 65}, 200);
+    if($(mwExplanation).height() == 0) {
+        $(mwExplanation).animate({height: 65}, 200);
     } else {
-        $(settingsExplanation).animate({height: 0}, 200);
+        $(mwExplanation).animate({height: 0}, 200);
     }
 });

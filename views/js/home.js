@@ -45,7 +45,9 @@ form.addEventListener('submit', function(e) {
     let time = '';
     let day = '';
     let matchWholeWord = '';
+    let outputInJSON = '';
     matchWholeWord = localStorage.getItem('matchWholeWord');
+    outputInJSON = localStorage.getItem('outputInJSON');
 
     // Check type of the query
     if(option == 'currentLesson') {
@@ -62,7 +64,8 @@ form.addEventListener('submit', function(e) {
         'q': option,
         't': time,
         'd': day,
-        'm': matchWholeWord
+        'm': matchWholeWord,
+        'r' : outputInJSON
     })
 
     // Open URL / send query
@@ -105,5 +108,7 @@ const prepareURL = (properties) => {
             result += `&${keys[index]}=${values[index]}`;
         }
     }
+
+    console.log(result);
     return result.slice(1);
 }
