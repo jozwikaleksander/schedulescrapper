@@ -20,55 +20,58 @@
             <!-- Error message -->
             <div class="error hidden"></div>
 
-            <!-- Basic info -->
-            <p class="mt">Wpisz adres URL plan lekcji</p>
-            <label for="url"><input type="text" name="url" required id=""value="https://plan.elektronik.edu.pl/"></label>
-            <p>Wpisz nazwę obiektu (klasa, inicjały nauczyciela)</p>
-            <label for="name"><input type="text" name="name" id=""placeholder="Podaj w przypadku braku ścieżki do pliku HTML"></label>
+            <div class="inputs-wrapper">
 
-            <!-- Query type -->
-            <p>Wybierz rodzaj zapytania:</p>
+                <!-- Basic info -->
+                <p class="mt">Wpisz adres URL plan lekcji</p>
+                <label for="url"><input type="text" name="url" required id=""value="https://plan.elektronik.edu.pl/"></label>
+                <p>Wpisz nazwę obiektu (klasa, inicjały nauczyciela)</p>
+                <label for="name"><input type="text" name="name" id=""placeholder="Podaj w przypadku braku ścieżki do pliku HTML"></label>
 
-            <!-- Schedule radio -->
-            <label for="schedule"> <input type="radio" id="schedule" checked name="query" onclick="radioChecked(this)" value="schedule">Plan zajęć</label>
+                <!-- Query type -->
+                <p>Wybierz rodzaj zapytania:</p>
 
-            <!-- Current lesson -->
+                <!-- Schedule radio -->
+                <label for="schedule"> <input type="radio" id="schedule" checked name="query" onclick="radioChecked(this)" value="schedule">Plan zajęć</label>
 
-            <label for="currentLesson"> <input type="radio" id="currentLesson" name="query"onclick="radioChecked(this)" value="currentLesson">Najbliższa lekcja</label>
+                <!-- Current lesson -->
 
-            <!-- Additional inputs for current lesson option -->
-            <div id="cl-container" class="less">
-                <label for="cl-time">Godzina: <input type="time" name="clTime" id="cl-time"></label><br>
-                <label for="cl-day">Dzień tygodnia:
-                    <select name="clDay" id="cl-day">
-                        <option value=1>Poniedziałek</option>
-                        <option value=2>Wtorek</option>
-                        <option value=3>Środa</option>
-                        <option value=4>Czwartek</option>
-                        <option value=5>Piątek</option>
-                    </select>
-                </label>
+                <label for="currentLesson"> <input type="radio" id="currentLesson" name="query"onclick="radioChecked(this)" value="currentLesson">Najbliższa lekcja</label>
+
+                <!-- Additional inputs for current lesson option -->
+                <div id="cl-container" class="less">
+                    <label for="cl-time">Godzina: <input type="time" name="clTime" id="cl-time"></label><br>
+                    <label for="cl-day">Dzień tygodnia:
+                        <select name="clDay" id="cl-day">
+                            <option value=1>Poniedziałek</option>
+                            <option value=2>Wtorek</option>
+                            <option value=3>Środa</option>
+                            <option value=4>Czwartek</option>
+                            <option value=5>Piątek</option>
+                        </select>
+                    </label>
+                </div>
+
+                <!-- Every lesson -->
+
+                <label for="everyLesson"> <input type="radio" id="everyLesson" name="query" onclick="radioChecked(this)"value="everyLesson">Wszystkie lekcje w danym dniu</label>
+
+                <!-- Additional inputs for every lesson option -->
+                <div id="el-container" class="less">
+                    <label for="el-day">Dzień tygodnia:
+                        <select name="elDay" id="el-day">
+                            <option value=1>Poniedziałek</option>
+                            <option value=2>Wtorek</option>
+                            <option value=3>Środa</option>
+                            <option value=4>Czwartek</option>
+                            <option value=5>Piątek</option>
+                        </select>
+                    </label>
+                </div>
+
+                <!-- Submit button -->
+                <input type="submit" value="Wyślij">
             </div>
-
-            <!-- Every lesson -->
-
-            <label for="everyLesson"> <input type="radio" id="everyLesson" name="query" onclick="radioChecked(this)"value="everyLesson">Wszystkie lekcje w danym dniu</label>
-
-            <!-- Additional inputs for every lesson option -->
-            <div id="el-container" class="less">
-                <label for="el-day">Dzień tygodnia:
-                    <select name="elDay" id="el-day">
-                        <option value=1>Poniedziałek</option>
-                        <option value=2>Wtorek</option>
-                        <option value=3>Środa</option>
-                        <option value=4>Czwartek</option>
-                        <option value=5>Piątek</option>
-                    </select>
-                </label>
-            </div>
-
-            <!-- Submit button -->
-            <input type="submit" value="Wyślij">
         </form>
     </div>
 

@@ -8,6 +8,7 @@
     
     <link rel="stylesheet" href="css/style.css">
     <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 </head>
 <body>
     <h2>Plan lekcji</h2>
@@ -41,12 +42,16 @@
         }
 
         table.appendChild(tableBody);
-        document.body.appendChild(table);
+        let wrapper = document.createElement('div');
+        wrapper.classList.add('table-wrapper');
+        wrapper.appendChild(table);
+        document.body.appendChild(wrapper);
     </script>
     
     <a href="/" class="go-back-btn">Wróć do strony głównej</a>
     <input type='button' class="current-lesson-btn" value="Znajdź najbliższą lekcję">
 
     <script src="js/schedule.js"></script>
+    <script src="js/headersShortening.js"></script>
 </body>
 </html>
