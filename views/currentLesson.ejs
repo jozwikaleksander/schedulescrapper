@@ -8,12 +8,6 @@
     
     <link rel="stylesheet" href="css/style.css">
     <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
-
-    <style>
-        table{
-            width:500px;
-        }
-    </style>
 </head>
 <body>
     <h2></h2>
@@ -50,7 +44,10 @@
         table.appendChild(thead);
         table.appendChild(tbody);
 
-        document.body.appendChild(table);
+        let wrapper = document.createElement('div');
+        wrapper.classList.add('table-wrapper');
+        wrapper.appendChild(table);
+        document.body.appendChild(wrapper); 
     </script>
 
     <a href="/" class="go-back-btn">Wróć do strony głównej</a>

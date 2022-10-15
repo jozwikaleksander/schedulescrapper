@@ -47,7 +47,10 @@
         table.appendChild(thead);
         table.appendChild(tbody);
 
-        document.body.appendChild(table);
+        let wrapper = document.createElement('div');
+        wrapper.classList.add('table-wrapper');
+        wrapper.appendChild(table);
+        document.body.appendChild(wrapper);
     </script>
 
     <a href="/" class="go-back-btn">Wróć do strony głównej</a>
