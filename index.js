@@ -133,9 +133,9 @@ app.get('/', (req, res) => {
     }
 });
 
-// Listening on port 5000
-app.listen(port, () => {
-    console.log(`Now listening on port ${port}`); 
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Our app is running on port ${ PORT }`);
 });
 
 // Scrapping table from the HTML
