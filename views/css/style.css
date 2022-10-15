@@ -155,25 +155,24 @@ table tbody tr.active-row {
 }
 
 /* SCROLLBAR */
-/* width */
 ::-webkit-scrollbar {
-    width: 10px;
+    width: 20px;
 }
   
 /* Track */
 ::-webkit-scrollbar-track {
-    background: var(--light-background);
+    background: transparent;
 }
 
-/* Handle */
+/* Thumb */
 ::-webkit-scrollbar-thumb {
-    background: var(--accent-color);
-    box-shadow: inset 1px 1px 0 var(--background-color);
-}
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
     background: var(--foreground-color);
+    border-radius: 20px;
+    border: 6px solid transparent;
+    background-clip: content-box;
+}
+::-webkit-scrollbar-thumb:hover{
+    background-color: var(--light-background);
 }
 
 /* HOME PAGE */
@@ -258,6 +257,7 @@ input[type='text']{
     border-bottom: 1px solid var(--accent-color);
     transition:  var(--transition);
     font-family: var(--font-family);
+    text-align: center;
 }
 input[type='text']:focus,
 input[type='text']:hover{
