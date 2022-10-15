@@ -47,7 +47,6 @@ app.get('/', (req, res) => {
             }).get();
 
             let result;
-            // TODO: Option to match the whole word
             if(matchWholeWord == "true"){
               result = data.filter((item) => {
                 let itemArray = item.toLowerCase().split(',');
@@ -65,11 +64,9 @@ app.get('/', (req, res) => {
               })
             }
             
-            console.log(result);
             // if object was found
             if(result.length == 1){
               name = result[0].split(',')[1];
-              console.log('Nazwa: '+name);
               result = result[0].split(',')[0];
               if(queryType=='schedule'){
                 res.redirect('/?'+'q='+queryType+'&url='+url+result+'&r='+responseType);

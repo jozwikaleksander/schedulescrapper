@@ -24,8 +24,11 @@ if (minutes < 10) {
 if (hours < 10) {
     hours = '0' + hours;
 }
-
-clDay.value = date.getDay();
+if(date.getDay() > 5){
+    clDay.value = 1;
+}else{
+    clDay.value = date.getDay();
+}
 
 clTime.value = hours + ':' +minutes;
 // --------------------------------------
@@ -104,11 +107,8 @@ const prepareURL = (properties) => {
 
     for (let index = 0; index < keys.length; index++) {
         if(values[index] != '' && values[index] != undefined){
-            console.log(keys[index]);
             result += `&${keys[index]}=${values[index]}`;
         }
     }
-
-    console.log(result);
     return result.slice(1);
 }

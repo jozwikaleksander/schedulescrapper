@@ -112,7 +112,6 @@ const checkIfTooEarly = (data,time,day) => {
     if(lesson){
         let interval = timeToMinutes(lesson['interval'].join("-"));        
         if(interval[0] > time && lesson['index'] == 0){
-            console.log('Too early');
             return true;
         }
     }
@@ -125,7 +124,6 @@ const checkIfTooLate = (data,time,day) => {
     if(lesson[day] != "" && lesson[day] != undefined && lesson != undefined){
         let interval = timeToMinutes(lesson['Godz']);        
         if(interval[1] < time){
-            console.log('Too late');
             return true;
         }
     }
@@ -225,7 +223,6 @@ const goToTheNextDay = (dayName,data,time) => {
     }
     else{
         dayName = getDayName(getDayIndex(dayName)+1);   
-        console.log(dayName);
     }
     let firstLesson = getFirstLesson(data,time,dayName);
     let timeInMinutes = timeToMinutes(firstLesson['Godz'])[0];
