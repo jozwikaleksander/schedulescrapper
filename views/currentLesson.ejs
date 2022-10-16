@@ -24,10 +24,11 @@
         let tbody = document.createElement("tbody");
 
         let headRow = document.createElement("tr");
-        let headers = Object.keys(res);
+        let headers = Object.keys(res).slice(0,3);
+        let headersName = ['Nr','Czas trwania','Lekcja'];
         for (let i = 0; i < headers.length; i++) {
             let th = document.createElement("th");
-            th.innerHTML = headers[i];
+            th.innerHTML = headersName[i];
             headRow.appendChild(th);
         }
 
