@@ -24,7 +24,7 @@ if (minutes < 10) {
 if (hours < 10) {
     hours = '0' + hours;
 }
-if(date.getDay() > 5){
+if(date.getDay() > 5 || date.getDay() < 1) {
     clDay.value = 1;
 }else{
     clDay.value = date.getDay();
