@@ -218,13 +218,15 @@ form{
     }
 }
 @media screen and (max-width: 650px) and (min-width:400px){
-    form{
-        width: 80vw;
+    form,
+    .settings-btn{
+        width: 80vw !important;
     }  
 }
 @media screen and (max-width: 400px){
-    form{
-        width: 95vw;
+    form,
+    .settings-btn{
+        width: 95vw !important;
     }  
 }
 .banner{
@@ -403,6 +405,16 @@ input[type="time"]::-webkit-calendar-picker-indicator {
     color: var(--accent-color);
     background: var(--text-color);
     transform: scale(1.1);
+}
+@media only screen and (max-width: 650px) {
+    .settings-btn{
+        
+        position: relative;
+        left: 0;
+        top: 0;
+        border-radius: 20px;
+        margin-top: 20px;
+    }
 }
 .settings{
     position: absolute;
