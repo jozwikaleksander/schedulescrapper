@@ -1,94 +1,146 @@
 // Getting current lesson
 const getCurrentLesson = (data,time,providedDayIndex) => {
-    let response = "";
 
-    // Getting the current time
-    let date = new Date();
-    let hours;
-    let minutes;
-    if(time==undefined){
-        hours = date.getHours();
-        minutes = date.getMinutes();
-    } else{
-        hours = parseInt(time.split(":")[0]);
-        minutes = parseInt(time.split(":")[1]);
-    }
-    // Calculating current time in minutes from the beginning of the day (e.g. 8:30 -> 510));
+    let schedule = convertData(data);
+    let dayIndex = providedDayIndex;
+
+    let hours = parseInt(time.split(":")[0]);
+    let minutes = parseInt(time.split(":")[1]);
+
     let timeInMinutes = (hours*60) + minutes;
 
-    // Creating a variable that will store current lesson object
     let currentLesson = {
         'index': 0,
         'interval': [],
         'info': "",
         'day:': ""
     }
+    console.log(timeInMinutes);
 
-    // Creating a variable that will store the index of current day.
-    let dayName;
+    for (let index = 0; index < schedule.length; index++) {
+        const element = schedule[index];
+        let previousElement;
 
-    // Checking if day was provided in the query, else  get the current day
-    if(checkIfDayWasProvided(providedDayIndex)){
-        dayName = getDayName(providedDayIndex);
-       
-    } else {
-        dayName = getDayName(date.getDay());
-    }
+        console.log(element);
 
-    // Checking if day is a school day
-    if(!checkDay(dayName)){
-        // If not, change day to the next school day (e.g. Saturday -> Monday)
-        dayName = "Poniedziałek";
-        let interval = timeToMinutes(getFirstLesson(data,time,dayName)['Godz']); //Get time when the first lesson starts in that day
-        timeInMinutes = interval[0]; // Set time to the time when the first lesson starts
-    }
-    else{
-        // Check if there are any lessons today
-        if(!checkIfAnyLessonsToday(data,dayName)){
-            dayName = getWorkingDay(data,dayName);
+        if(index > 0){
+            previousElement = schedule[index-1];
         }
-        // If it is a school day, check if it is too early
-        if(checkIfTooEarly(data,timeInMinutes,dayName)){
-            // If it is too early, set time to the time when the first lesson starts
-            console.log('Too early');
-            timeInMinutes = timeToMinutes(getFirstLesson(data,time,dayName)['Godz'])[0];
-        } else if (checkIfTooLate(data,timeInMinutes,dayName)){
-            // If it is too late, change day to the next school day (e.g. Tuesday -> Wednesday) and set time to the time when the first lesson starts
-            console.log('Too late');
-            let result = goToTheNextDay(dayName,data,time);
-            timeInMinutes = result[0];
-            dayName = result[1];
-        } 
+        
+        if(element.day == dayIndex && inInterval(timeInMinutes,element.interval)){
+            console.log('y');
+            return element;
+        }
+        else if(previousElement != undefined && timeInMinutes > timeToMinutes(previousElement.interval[1]) && previousElement.day == dayIndex && timeInMinutes < timeToMinutes(element.interval[0])){
+            console.log('x');
+            return element;
+        }
+        
+        if(element.day == dayIndex){
+            console.log('z');
+            if(index < (schedule.length-1)){
+                if(schedule[index+1].day != dayIndex){
+                    return schedule[index+1];
+                }
+                else if(index > 0 && schedule[index-1].day != dayIndex){
+                    return element;
+                }
+                else if(index == 0){
+                    return element;
+                }
+            }
+            else if(index == schedule.length-1){
+                return schedule[0];
+            }
+        }
+        
     }
 
-    // Getting the current lesson
-    currentLesson = getLesson(data,timeInMinutes,dayName);
+    console.log(currentLesson);
+
+    // Getting the current time
+    // let date = new Date();
+    // let hours;
+    // let minutes;
+    // if(time==undefined){
+    //     hours = date.getHours();
+    //     minutes = date.getMinutes();
+    // } else{
+    //     hours = parseInt(time.split(":")[0]);
+    //     minutes = parseInt(time.split(":")[1]);
+    // }
+    // // Calculating current time in minutes from the beginning of the day (e.g. 8:30 -> 510));
+    // let timeInMinutes = (hours*60) + minutes;
+
+    // // Creating a variable that will store current lesson object
+    // let currentLesson = {
+    //     'index': 0,
+    //     'interval': [],
+    //     'info': "",
+    //     'day:': ""
+    // }
+
+    // // Creating a variable that will store the index of current day.
+    // let dayName;
+
+    // // Checking if day was provided in the query, else  get the current day
+    // if(checkIfDayWasProvided(providedDayIndex)){
+    //     dayName = getDayName(providedDayIndex);
+       
+    // } else {
+    //     dayName = getDayName(date.getDay());
+    // }
+
+    // // Checking if day is a school day
+    // if(!checkDay(dayName)){
+    //     // If not, change day to the next school day (e.g. Saturday -> Monday)
+    //     dayName = "Poniedziałek";
+    //     let interval = timeToMinutes(getFirstLesson(data,time,dayName)['Godz']); //Get time when the first lesson starts in that day
+    //     timeInMinutes = interval[0]; // Set time to the time when the first lesson starts
+    // }
+    // else{
+    //     // Check if there are any lessons today
+    //     if(!checkIfAnyLessonsToday(data,dayName)){
+    //         dayName = getWorkingDay(data,dayName);
+    //     }
+    //     // If it is a school day, check if it is too early
+    //     if(checkIfTooEarly(data,timeInMinutes,dayName)){
+    //         // If it is too early, set time to the time when the first lesson starts
+    //         console.log('Too early');
+    //         timeInMinutes = timeToMinutes(getFirstLesson(data,time,dayName)['Godz'])[0];
+    //     } else if (checkIfTooLate(data,timeInMinutes,dayName)){
+    //         // If it is too late, change day to the next school day (e.g. Tuesday -> Wednesday) and set time to the time when the first lesson starts
+    //         console.log('Too late');
+    //         let result = goToTheNextDay(dayName,data,time);
+    //         timeInMinutes = result[0];
+    //         dayName = result[1];
+    //     } 
+    // }
+
+    // // Getting the current lesson
+    // currentLesson = getLesson(data,timeInMinutes,dayName);
     
-    let currentLessonStart = currentLesson.interval[0];
-    let currentLessonEnd = currentLesson.interval[1];
+    // let currentLessonStart = currentLesson.interval[0];
+    // let currentLessonEnd = currentLesson.interval[1];
 
-    if(parseInt(currentLessonStart.split(":")[1]) < 10){
-        currentLessonStart = currentLessonStart.split(":")[0] + ":0"+currentLessonStart.split(":")[1];
-    }
+    // if(parseInt(currentLessonStart.split(":")[1]) < 10){
+    //     currentLessonStart = currentLessonStart.split(":")[0] + ":0"+currentLessonStart.split(":")[1];
+    // }
 
-    if(parseInt(currentLessonEnd.split(":")[1]) < 10){
-        currentLessonEnd = currentLessonEnd.split(":")[0] + ":0"+currentLessonEnd.split(":")[1];
-    }
-    currentLesson.interval = [currentLessonStart,currentLessonEnd];
-    console.log("Lekcja" + currentLesson.info);
-    return currentLesson;
+    // if(parseInt(currentLessonEnd.split(":")[1]) < 10){
+    //     currentLessonEnd = currentLessonEnd.split(":")[0] + ":0"+currentLessonEnd.split(":")[1];
+    // }
+    // currentLesson.interval = [currentLessonStart,currentLessonEnd];
+    // console.log("Lekcja" + currentLesson.info);
+    // return currentLesson;
 }
 // Function that converts time to minutes = 8:30 -> 510
-const timeToMinutes = (lesson) => {
-    let interval = lesson.split("-");
+const timeToMinutes = (time) => {
     
-    let start = interval[0].split(":");
-    let end = interval[1].split(":");
+    let hours = parseInt(time.split(":")[0]);
+    let minutes = parseInt(time.split(":")[1]);
     
-    let startInMinutes = (parseInt(start[0])*60) + parseInt(start[1]);
-    let endInMinutes = (parseInt(end[0])*60) + parseInt(end[1]);
-    
-    return [startInMinutes,endInMinutes];
+    return (hours*60) + minutes;
 }
 // Function that converts minutes to time = 510 -> 8:30
 const minutesToTime = (minutes) => {
@@ -192,9 +244,31 @@ const getLesson = (data,timeInMinutes, day) => {
     currentLesson.day = day;
     return currentLesson;
 }
+// Convert format of data
+const convertData = (data) => {
+    let result = [];
+
+    data[0].forEach(element => {
+        Object.keys(element).forEach(key => {
+            if(key != 'Nr' && key != 'Godz' && element[key] != ''){
+                result.push({
+                    index:element['Nr'],
+                    interval:element['Godz'].split("-"),
+                    info: element[key],
+                    day: getDayIndex(key)
+                });
+            }
+        });
+    });
+    return result.sort((a,b) => a.day - b.day);
+}
+
 // Check if the time is in interval
 const inInterval = (time, interval) => {
-    if((time>=interval[0] && time<=interval[1])){
+    let iStart = timeToMinutes(interval[0]);
+    let iEnd = timeToMinutes(interval[1]);
+    console.log('Interval: ' + iStart + ", " + iEnd);
+    if((time>=iStart && time<=iEnd)){
         return true;
     }
     return false;
