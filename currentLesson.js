@@ -50,9 +50,11 @@ const getCurrentLesson = (data,time,providedDayIndex) => {
         // If it is a school day, check if it is too early
         if(checkIfTooEarly(data,timeInMinutes,dayName)){
             // If it is too early, set time to the time when the first lesson starts
+            console.log('Too early');
             timeInMinutes = timeToMinutes(getFirstLesson(data,time,dayName)['Godz'])[0];
         } else if (checkIfTooLate(data,timeInMinutes,dayName)){
             // If it is too late, change day to the next school day (e.g. Tuesday -> Wednesday) and set time to the time when the first lesson starts
+            console.log('Too late');
             let result = goToTheNextDay(dayName,data,time);
             timeInMinutes = result[0];
             dayName = result[1];
@@ -62,6 +64,18 @@ const getCurrentLesson = (data,time,providedDayIndex) => {
     // Getting the current lesson
     currentLesson = getLesson(data,timeInMinutes,dayName);
     
+    let currentLessonStart = currentLesson.interval[0];
+    let currentLessonEnd = currentLesson.interval[1];
+
+    if(parseInt(currentLessonStart.split(":")[1]) < 10){
+        currentLessonStart = currentLessonStart.split(":")[0] + ":0"+currentLessonStart.split(":")[1];
+    }
+
+    if(parseInt(currentLessonEnd.split(":")[1]) < 10){
+        currentLessonEnd = currentLessonEnd.split(":")[0] + ":0"+currentLessonEnd.split(":")[1];
+    }
+    currentLesson.interval = [currentLessonStart,currentLessonEnd];
+    console.log("Lekcja" + currentLesson.info);
     return currentLesson;
 }
 // Function that converts time to minutes = 8:30 -> 510
@@ -108,24 +122,18 @@ const getDayIndex = (dayName) => {
 }
 // Check if provided time is beforee the first lesson starts
 const checkIfTooEarly = (data,time,day) => {
-    let lesson = getLesson(data,time,day);
-    if(lesson){
-        let interval = timeToMinutes(lesson['interval'].join("-"));        
-        if(interval[0] > time && lesson['index'] == 0){
-            return true;
-        }
+    let lesson = getFirstLesson(data,time,day);
+    if(timeToMinutes(lesson['Godz'])[0] > time){
+        return true;
     }
     return false;
 }
 // Check if provided time is after the last lesson ends
 const checkIfTooLate = (data,time,day) => {
     let lesson = getLastLesson(data,time,day);
-
-    if(lesson[day] != "" && lesson[day] != undefined && lesson != undefined){
-        let interval = timeToMinutes(lesson['Godz']);        
-        if(interval[1] < time){
-            return true;
-        }
+    console.log(lesson);
+    if(timeToMinutes(lesson['Godz'])[1] < time){
+        return true;
     }
     
     return false;
@@ -200,7 +208,9 @@ const getFirstLesson = (data,time,day) => {
             if(lesson[day] == ""){
                 continue;
             }
-            return lesson;
+            else{
+                return lesson;
+            }
         }
     } 
 }
