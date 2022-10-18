@@ -58,7 +58,7 @@ const getCurrentLesson = (data,time,providedDayIndex) => {
             let result = goToTheNextDay(dayName,data,time);
             timeInMinutes = result[0];
             dayName = result[1];
-        }
+        } 
     }
 
     // Getting the current lesson
@@ -265,5 +265,6 @@ const getWorkingDay = (data,day) => {
     }
     return day;
 }
+
 // Exporting the main function
 module.exports = getCurrentLesson
