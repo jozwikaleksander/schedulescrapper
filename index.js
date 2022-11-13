@@ -86,37 +86,49 @@ app.get('/', (req, res) => {
               res.render('home', {error: 'Nie znaleziono obiektu'});
             }
           }
+          else{
+            console.log(error);
+            res.render('home', {error: 'Nie znaleziono obiektu'});
+          }
         });
       } else if(validateURLAndName(url,name)){ // If the name wasn't provided check if URL and name are valid
         // If the URL was sent (meaning the URL links to the file)
         request(url, function(error, response, html) {
-          if (!error) {
-            let data = getTable(html);
-            // Response variable
-            let resValue;
-            
-            // Check if data is not empty
-            if(data!=undefined){
-              // Checking the query type
-              if(queryType=="schedule"){ // If the query type is schedule
-                // Sending the schedule data
-                resValue = data;
-              }
-              else if(queryType=="currentLesson"){ // If the query type is currentLesson
-                // Getting current lesson with provided information
-                resValue = getCurrentLesson(data,time,day);
-              }
-              else if(queryType=='everyLesson'){ // If the query type is everyLesson
-                resValue = getEveryLesson(data,day);
-              }
-              if(responseType=="json"){ // If the response type is JSON
-                res.render('empty',{resValue:resValue});
+          try{
+            console.log(response.statusCode) // 200
+    console.log(response.headers['content-type'])
+            if (!error && response.statusCode == 200) {
+              let data = getTable(html);
+              // Response variable
+              let resValue;
+              
+              // Check if data is not empty
+              if(data!=undefined){
+                // Checking the query type
+                if(queryType=="schedule"){ // If the query type is schedule
+                  // Sending the schedule data
+                  resValue = data;
+                }
+                else if(queryType=="currentLesson"){ // If the query type is currentLesson
+                  // Getting current lesson with provided information
+                  resValue = getCurrentLesson(data,time,day);
+                }
+                else if(queryType=='everyLesson'){ // If the query type is everyLesson
+                  resValue = getEveryLesson(data,day);
+                }
+                if(responseType=="json"){ // If the response type is JSON
+                  res.render('empty',{resValue:resValue});
+                } else{
+                  res.render(queryType,{resValue:resValue, objName: name, dayName: getDayName(day)});
+                }
               } else{
-                res.render(queryType,{resValue:resValue, objName: name, dayName: getDayName(day)});
+                res.render('home', {error: 'Nie znaleziono obiektu'});
               }
-            } else{
-              res.render('home', {error: 'Nie znaleziono obiektu'});
             }
+          }
+          catch(e){
+            console.error(error)
+            res.render('home', {error: 'Nie znaleziono obiektu'});
           }
         });
       }
