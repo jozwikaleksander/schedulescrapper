@@ -40,6 +40,9 @@ const checkIfDayWasProvided = (providedDayIndex) => {
 // Get the name of the day based on the index
 const getDayName = (dayIndex) => {
     let days = ["Niedziela","Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek","Sobota"];
+    if(dayIndex >= days.length || dayIndex < 0){
+        return days[1]; // If the day index is out of range return Monday
+    }
     return days[dayIndex];
 }
 const checkDay = (day) => {
