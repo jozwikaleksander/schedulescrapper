@@ -1,5 +1,5 @@
 // Getting current lesson
-const getCurrentLesson = (data,time,providedDayIndex) => {
+const getCurrentLesson = (data,timeInMinutes,providedDayIndex) => {
 
     // Converting json data scrapper from html to more readable format
     let schedule = convertData(data);
@@ -14,23 +14,6 @@ const getCurrentLesson = (data,time,providedDayIndex) => {
     else{
         dayIndex = dateObj.getDay();
     }
-
-    let hours;
-    let minutes;
-    // Check if time was provided
-    if(time != undefined){
-        // Getting current time
-        hours = parseInt(time.split(":")[0]);
-        minutes = parseInt(time.split(":")[1]);
-    } else{
-        hours = dateObj.getHours();
-        minutes = dateObj.getMinutes();
-    }
-
-    
-
-    // Converting time to minutes
-    let timeInMinutes = (hours*60) + minutes;
 
     // Checking if day is weekend
     if(dayIndex > 5){

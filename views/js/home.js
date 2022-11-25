@@ -52,6 +52,10 @@ form.addEventListener('submit', function(e) {
     matchWholeWord = localStorage.getItem('matchWholeWord');
     outputInJSON = localStorage.getItem('outputInJSON');
 
+    if(outputInJSON == undefined){
+        outputInJSON = 'html';
+    }
+
     // Check type of the query
     if(option == 'currentLesson') {
         time = form.elements.clTime.value;

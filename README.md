@@ -4,13 +4,13 @@
 
 Simple web scrapper that works with Vulkan's Optivum schedule.
 
-## Features
+## 📃 Features
 - [x] scraping schedule
 - [x] checking next lesson
 - [x] checking all lessons at certain day
 - [x] exporting results to JSON
 
-# GET parameters
+## ⚙ GET parameters
 To save preferences (as URL, name, querytype) you can bookmark whole URL with GET parameters. List of those parameters you can find below:
 - **r** - type of response you want to get (html, json) - **values:** html, json
 - **q** - query type (whole schedule, single lesson, all lessons at certain day) - **values:** schedule, currentLesson, everyLesson
@@ -19,5 +19,10 @@ To save preferences (as URL, name, querytype) you can bookmark whole URL with GE
     Sunday - 0, Monday - 1, Tuesday - 2, Wednesday - 3, Thurdsay - 4, Friday - 5, Saturday - 6
 - **n** - name of object you are searching for (class, teacher's initials, classroom number)
 - **m** - match whole word - **values:** true, false
+- **a** - add minutes to given time (there is no GUI option for that)
 
-By Aleksander Jóźwik
+### 📝 Example
+    ?q=currentLesson&url=https://plan.elektronik.edu.pl/plany/o31.html&t=21:31&d=5&n=4I.&r=html&a=3
+
+## 👤 Credits
+Project was made by **Aleksander Jóźwik** (@jozwikaleksander).

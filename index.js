@@ -33,6 +33,7 @@ app.get('/', (req, res) => {
     let day = req.query.d;
     let name = req.query.n;
     let matchWholeWord = req.query.m;
+    let minutesAdded = req.query.a;
 
     // If the query was sent by the user
     if(queryType != undefined && validateURLAndName(url,name)){
@@ -95,8 +96,6 @@ app.get('/', (req, res) => {
         // If the URL was sent (meaning the URL links to the file)
         request(url, function(error, response, html) {
           try{
-            console.log(response.statusCode) // 200
-    console.log(response.headers['content-type'])
             if (!error && response.statusCode == 200) {
               let data = getTable(html);
               // Response variable
@@ -111,7 +110,7 @@ app.get('/', (req, res) => {
                 }
                 else if(queryType=="currentLesson"){ // If the query type is currentLesson
                   // Getting current lesson with provided information
-                  resValue = getCurrentLesson(data,time,day);
+                  resValue = getCurrentLesson(data,timeToMinutes(time,minutesAdded),day);
                 }
                 else if(queryType=='everyLesson'){ // If the query type is everyLesson
                   resValue = getEveryLesson(data,day);
@@ -175,5 +174,28 @@ const validateURLAndName = (url,name) =>{
     return false;
   }
   return true;
+}
+// Convert time to minutes
+const timeToMinutes = (time,minutesAdded) =>{
+  let hours;
+  let minutes;
+  // Check if time was provided
+  if(time != undefined){
+      // Getting current time
+      hours = parseInt(time.split(":")[0]);
+      minutes = parseInt(time.split(":")[1]);
+  } else{
+      hours = dateObj.getHours();
+      minutes = dateObj.getMinutes();
+  }
+
+  // Converting time to minutes
+  let timeInMinutes = (hours*60) + minutes;
+
+  // Adding minutes if provided
+  if(minutesAdded != undefined){
+    timeInMinutes += parseInt(minutesAdded);
+  }
+  return timeInMinutes;
 }
 module.exports = app;

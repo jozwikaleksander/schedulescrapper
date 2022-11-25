@@ -5,8 +5,6 @@ const getEveryLesson = (data,day) => {
     let date = new Date();
 
     let lessons = [];
-
-    
     
     if(checkIfDayWasProvided(day)){
         dayName = getDayName(day);
