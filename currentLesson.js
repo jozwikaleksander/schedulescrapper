@@ -17,6 +17,7 @@ const getCurrentLesson = (data,timeInMinutes,providedDayIndex) => {
 
     // Checking if day is weekend
     if(dayIndex > 5){
+        timeInMinutes = 0;
         dayIndex = 1;
     }
 

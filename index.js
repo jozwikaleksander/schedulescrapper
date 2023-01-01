@@ -15,7 +15,6 @@ const getEveryLesson = require('./getEveryLesson.js');
 
 // App configuration
 const app = express();
-const port = 5000;
 app.set('view engine', 'ejs')
 app.use(express.static(__dirname + '/views'));
 app.use(favicon(__dirname + '/favicon.ico'));
