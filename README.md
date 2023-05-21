@@ -4,6 +4,8 @@
 
 Simple web scrapper that works with Vulkan's Optivum schedule.
 
+**Check it out** 👉 [click me](https://schedulescrapper.herokuapp.com/)
+
 ## 📃 Features
 - [x] scraping schedule
 - [x] checking next lesson
