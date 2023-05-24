@@ -25,6 +25,21 @@ To save preferences (as URL, name, querytype) you can bookmark whole URL with GE
 
 ### 📝 Example
     ?q=currentLesson&url=https://plan.elektronik.edu.pl/plany/o31.html&t=21:31&d=5&n=4I.&r=html&a=3
+    
+## 🎨 Custom CSS
+
+        @-moz-document domain("schedulescrapper.herokuapp.com") {
+            :root{
+                --accent-color: #eba0ac;
+                --background-color: #181825;
+                --foreground-color: #1e1e2e;
+                --light-background: #313244;
+                --error-color: #f38ba8;
+                --text-color: #efefef;
+            }
+        }
+        
+If you don't like Nord, you can use Stylus extension to change the color palette. The code above will change color scheme to Catpuccin, but you can obviously change it to your preference.
 
 ## 👤 Credits
 Project was made by **Aleksander Jóźwik** (@jozwikaleksander).
