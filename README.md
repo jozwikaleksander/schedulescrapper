@@ -39,7 +39,7 @@ To save preferences (as URL, name, querytype) you can bookmark whole URL with GE
             }
         }
         
-If you don't like Nord, you can use Stylus extension to change the color palette. The code above will change color scheme to Catpuccin, but you can obviously change it to your preference.
+If you don't like Nord, you can use **Stylus extension** to change the color palette. The code above will change color scheme to **Catppuccin**, but you can obviously change it to your preference.
 
 ## 👤 Credits
 Project was made by **Aleksander Jóźwik** (@jozwikaleksander).
